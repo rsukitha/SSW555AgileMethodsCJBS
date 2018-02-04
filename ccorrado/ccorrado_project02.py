@@ -11,6 +11,7 @@ the output of running your program on your test GEDCOM file
 the output of running your program against the input test file on Canvas
 
 Created January 30th, 2018
+Modified February 4th, 2018
 
 """
 
@@ -24,106 +25,100 @@ class GedcomParseTest(unittest.TestCase):
     """
 
     def test_parser(self):
-        parse_gedcom_file("./proj02test.ged")
-        # parse_gedcom_file("./ccorradop02test.ged")
+        # parse_gedcom_file("./proj02test.ged")
+        parse_gedcom_file("./ccorradop02test.ged")
 
     def test_valid_tag(self):
-        self.assertTrue(
-            validate_tag_line("0", "NOTE", "NOTE"))  # Assert that NOTE can have NOTE as val 0 (top == selct)
+        self.assertEqual(('0', 'FAM', 'Y', 'f2'), validate_tag_line("0 f2 FAM"))  # Assert 0 f2 FAM is valid
 
     def test_valid_tag2(self):
-        self.assertFalse(validate_tag_line("0", "FAM", "BIRT"))  # Assert BIRT cannot have a FAM as val 0.
+        self.assertEqual(('1', 'SEX', 'Y', 'M'), validate_tag_line("1 SEX M"))  # Assert 1 SEX M is valid
 
     def test_valid_tag3(self):
-        self.assertFalse(validate_tag_line("3", "NOTE", ""))  # Assert 3 is invalid value.
+        self.assertEqual(('1', 'DIV', 'Y', ''), validate_tag_line("1 DIV"))  # Assert 1 DIV is valid
 
     def test_valid_tag4(self):
-        self.assertTrue(validate_tag_line("2", "DATE", "BIRT"))  # Assert BIRT can have a DATE as val 2
+        self.assertEqual(('0', 'DIV', 'N', 'invalid'),
+                         validate_tag_line("0 DIV invalid"))  # Assert 0 DIV invalid is invalid
 
     def test_valid_tag5(self):
-        self.assertTrue(validate_tag_line("1", "HUSB", "FAM"))  # Assert a FAM can have a HUSB as val 1
+        self.assertEqual(('1', 'NOTE', 'N', 'bad note'),
+                         validate_tag_line("1 NOTE bad note"))  # Assert 1 NOTE bad note is invalid
 
     def test_valid_tag6(self):
-        self.assertFalse(validate_tag_line("1", "NOTE", "INDI"))  # Assert that INDI cannot have NOTE as val 1
+        self.assertEqual(('2', 'BIRT', 'N', 'invalid'),
+                         validate_tag_line("2 BIRT invalid"))  # Assert 2 BIRT invalid is invalid
 
     def test_valid_tag7(self):
-        self.assertTrue(validate_tag_line("1", "FAMC", "INDI"))  # Assert that an INDI can have a FAMC as val 1
+        self.assertEqual(('1', 'INVALID', 'N', 'invalid'),
+                         validate_tag_line("1 INVALID invalid"))  # Assert 1 INVALID invalid is invalid
+
+    def test_valid_tag8(self):
+        self.assertEqual(('0', 'INDI', 'N', 'id'),
+                         validate_tag_line("0 INDI id"))  # Assert 0 INDI id is invalid
+
+    def test_valid_tag9(self):
+        self.assertEqual(('0', 'FAM', 'N', 'id'),
+                         validate_tag_line("0 FAM id"))  # Assert 0 FAM id is invalid
+
+    def test_valid_tag10(self):
+        self.assertEqual(('0', 'FAMC', 'N', 'invalid'),
+                         validate_tag_line("0 FAMC invalid"))  # Assert 0 FAMC invalid is invalid
+
+    def test_valid_tag11(self):
+        self.assertEqual(('0', 'WIFE', 'N', ''),
+                         validate_tag_line("0 WIFE"))  # Assert 0 WIFE is invalid
 
 
-def validate_tag_line(selected_level, selected_tag, current_top_tag):
+class Individual:
+    __slots__ = "id", "name", "gender", "birthday", "age", "alive", "death", "child", "spouse"
+
+    def __init__(self, unique_id):
+        self.id = unique_id
+        self.child = {}
+        self.spouse = {}
+        # TODO define age and alive determinations based on data.
+
+
+class Family:
+    __slots__ = "id", "married", "married", "husband_id", "husband_name", "wife_id", "wife_name", "children"
+
+    def __init__(self, unique_id):
+        self.id = unique_id
+        self.children = {}
+        # TODO Define how to reference names based on IDs
+
+
+def validate_tag_line(gedcom_line):
     """
     Method to validate the given tag and associated level.
 
-    :param selected_level: level 0, 1, or 2.
-    :param selected_tag:     e.g."NAME", "SEX", "BIRT", etc
-    :param current_top_tag: e.g. "INDI", "FAM", "HEAD", "TRLR", etc
-    :return: true if valid.
+    :param gedcom_line: This is a sample line from a gedcom file
+    :return: list containing
     """
-    # Tuple of valid levels
-    valid_levels = ('0', '1', '2')
+    # Dictionary of All Valid Tags for each level.
+    valid_tags = {'0': ('HEAD', 'NOTE', 'TRLR'),
+                  '1': ('BIRT', 'CHIL', 'DEAT', 'DIV', 'FAMC', 'FAMS', 'HUSB', 'MARR', 'NAME', 'SEX', 'WIFE'),
+                  '2': ('DATE')}
 
-    # Gut check on valid levels.
-    if selected_level not in valid_levels:
-        return False
+    gedcom_tokens = gedcom_line.split()
 
-    # Dont support Dates not level 2
-    if selected_tag == "DATE" and selected_level != '2':
-        return False
+    if len(gedcom_tokens) == 3 and gedcom_tokens[0] == '0' and gedcom_tokens[2] in ('INDI', 'FAM'):
+        level, args, tag = gedcom_tokens
+        valid = 'Y'
+    elif len(gedcom_tokens) >= 2:
+        level, tag, args = gedcom_tokens[0], gedcom_tokens[1], " ".join(gedcom_tokens[2:])
+        valid = 'Y' if level in valid_tags and tag in valid_tags[level] else 'N'
+    else:
+        level, tag, valid, args = gedcom_tokens, 'NA', 'N', 'NA'
 
-    # Tuple of all valid Level 0 tags
-    level_0_tags = ("INDI", "FAM", "HEAD", "TRLR", "NOTE")
-
-    # Tuple of valid INDI tags
-    valid_indi_tags = ("NAME", "SEX", "BIRT", "DEAT", "FAMC", "FAMS")
-
-    # Tuple of valid FAM tags
-    valid_fam_tags = ("MARR", "HUSB", "WIFE", "CHIL", "DIV")
-
-    # Tuple of valid DATE tags
-    valid_date_tags = ("BIRT", "DEAT", "DIV", "MARR")
-
-    level_dict = dict()
-    level_dict["0"] = level_0_tags
-    level_dict["1"] = valid_fam_tags + valid_indi_tags
-    level_dict["2"] = "DATE"
-
-    # If the user passes in a top tag as the current tag and the level is 0, immediately validate
-    if selected_tag in level_0_tags and selected_tag is current_top_tag and selected_level == '0':
-        return True
-
-    # Validate if the selected tag is even a valid tag.
-    if selected_tag not in (valid_indi_tags + valid_fam_tags + valid_date_tags + ("DATE", "DATE")):
-        return False
-
-    # if for the current selected tag the level is not valid, return False.
-    if selected_tag not in level_dict[selected_level]:
-        return False
-
-    tag_dict = dict()
-    tag_dict["INDI"] = valid_indi_tags
-    tag_dict["FAM"] = valid_fam_tags
-    tag_dict["DATE"] = valid_date_tags
-    tag_dict["HEAD"] = ""
-    tag_dict["TRLR"] = ""
-    tag_dict["NOTE"] = ""
-
-    # Validate if the selected tag is in the valid set of tags for the current top tag.
-    if selected_level == '0' and selected_tag not in tag_dict[level_0_tags]:
-        return False
-
-    # All Validations Passed
-    return True
+    return level, tag, valid, args
 
 
 def parse_gedcom_file(file_path):
     """
     Helper method to parse the file from input.
     """
-
-    # Tuple of supported tags
-    valid_tags = ("NAME", "SEX", "BIRT", "DEAT", "FAMC", "FAMS", "DATE",
-                  "MARR", "HUSB", "WIFE", "CHIL", "DIV", "INDI", "FAM", "HEAD", "TRLR", "NOTE")
-
     try:
         file = open(file_path)
     except FileNotFoundError:
@@ -132,24 +127,66 @@ def parse_gedcom_file(file_path):
         print("This is a directory: " + str(file_path))
     else:
         with file:
-            top_tag = ""
+            valid_results = []
             for line in file.readlines():
                 print('--> ' + line.strip())
-                current_line = line.strip().split(" ")
-                current_level = current_line[0]
-                current_tag = current_line[1]
-                is_valid = "N"
-                current_arguments = " ".join(current_line[2:])
-                # Support cases where the current tag could be in the 3rd position of the line.
-                if current_tag not in valid_tags:
-                    if len(current_line) >= 3:
-                        current_tag = current_line[2]
-                        current_arguments = current_line[1]
-                if current_level == '0':
-                    top_tag = current_tag
-                if validate_tag_line(current_level, current_tag, top_tag):
-                    is_valid = "Y"
-                print('<-- {}|{}|{}|{}\n'.format(current_level, current_tag, is_valid, current_arguments))
+                result = validate_tag_line(line)
+                if result[2] == 'Y':
+                    valid_results.append(result)
+                print('<-- {}|{}|{}|{}\n'.format(result[0], result[1], result[2], result[3]))
+            parse_valid_results(valid_results)
+            # TODO print data to tables
+
+
+def parse_valid_results(results):
+    """
+    Method to parse valid results from the GEDCOM file and return INDI/FAM dicts indexed by ID
+
+    :param results -- List of valid GEDCOM results data formatted 'level, tag, valid, args'
+    """
+    families = {}
+    individuals = {}
+    current_fam_id = ""
+    current_indi_id = ""
+    results_iter = iter(results)
+    for result in results_iter:
+        if result[1] == 'FAM':
+            families[result[3]] = Family(result[3])
+            current_fam_id = result[3]
+        elif result[1] == 'INDI':
+            individuals[result[3]] = Individual(result[3])
+            current_indi_id = result[3]
+        elif result[1] == 'NAME':
+            individuals.get(current_indi_id).name = result[3]
+        elif result[1] == 'SEX':
+            individuals.get(current_indi_id).gender = result[3]
+        elif result[1] == 'BIRT':
+            indi = individuals.get(current_indi_id)
+            date = next(results_iter)
+            indi.birthday = date[3]
+        elif result[1] == 'DEAT':
+            indi = individuals.get(current_indi_id)
+            date = next(results_iter)
+            indi.death = date[3]
+        elif result[1] == 'FAMC':
+            individuals.get(current_indi_id).child[result[3]] = result[3]
+        elif result[1] == 'FAMS':
+            individuals.get(current_indi_id).spouse[result[3]] = result[3]
+        elif result[1] == 'HUSB':
+            families.get(current_fam_id).husband_id = result[3]
+        elif result[1] == 'WIFE':
+            families.get(current_fam_id).wife_id = result[3]
+        elif result[1] == 'CHIL':
+            families.get(current_fam_id).children[result[3]] = result[3]
+        elif result[1] == 'MARR':
+            fam = families.get(current_fam_id)
+            date = next(results_iter)
+            fam.married = date[3]
+        elif result[1] == 'DIV':
+            fam = families.get(current_fam_id)
+            date = next(results_iter)
+            fam.divorced = date[3]
+    return families, individuals
 
 
 def validate_gedcom_file(directory):
