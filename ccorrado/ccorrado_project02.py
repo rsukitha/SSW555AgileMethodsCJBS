@@ -134,6 +134,9 @@ def parse_gedcom_file(file_path):
                 if result[2] == 'Y':
                     valid_results.append(result)
                 print('<-- {}|{}|{}|{}\n'.format(result[0], result[1], result[2], result[3]))
+
+		verify_date(result)
+
             parse_valid_results(valid_results)
             # TODO print data to tables
 
@@ -187,6 +190,16 @@ def parse_valid_results(results):
             date = next(results_iter)
             fam.divorced = date[3]
     return families, individuals
+
+
+
+def verify_date(date_value): #verify date is less than 150 years
+    if date_value[1] == 'DATE':
+        if (abs(int(date_value[3].split()[2]))) > 2018:
+            print ("Date is in the future: {}".format(abs(int(date_value[3].split()[2]))))
+        elif (abs(2018 - int(date_value[3].split()[2]))) > 150:
+            print ('Date specified error! Date should be less 150 years')
+
 
 
 def validate_gedcom_file(directory):
