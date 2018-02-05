@@ -17,6 +17,7 @@ Modified February 4th, 2018
 
 import os
 import unittest
+import datetime
 
 
 class GedcomParseTest(unittest.TestCase):
@@ -77,7 +78,18 @@ class Individual:
         self.id = unique_id
         self.child = {}
         self.spouse = {}
+
         # TODO define age and alive determinations based on data.
+
+    def __init_(self, birthday):
+        self.date = birthday
+        self.assertEqual(('False'), verify_date(self.date))
+
+
+    def __init_(self, age):
+        self.age = age
+        self.assertLessEqual(('14'), verify_date(self.age))
+
 
 
 class Family:
@@ -135,8 +147,6 @@ def parse_gedcom_file(file_path):
                     valid_results.append(result)
                 print('<-- {}|{}|{}|{}\n'.format(result[0], result[1], result[2], result[3]))
 
-		verify_date(result)
-
             parse_valid_results(valid_results)
             # TODO print data to tables
 
@@ -193,12 +203,19 @@ def parse_valid_results(results):
 
 
 
-def verify_date(date_value): #verify date is less than 150 years
-    if date_value[1] == 'DATE':
-        if (abs(int(date_value[3].split()[2]))) > 2018:
-            print ("Date is in the future: {}".format(abs(int(date_value[3].split()[2]))))
-        elif (abs(2018 - int(date_value[3].split()[2]))) > 150:
-            print ('Date specified error! Date should be less 150 years')
+def verify_date(birthday): #verify birthday is less than 150 years
+    year = date_value[3].split()[2]
+    month = date_value[3].split()[1]
+    day = date_value[3].split()[0]
+    birthday = datetime.date(year, month, day)
+    today = datetime.datetime.now()
+    year_sub = today.year - 150
+    today_minus_years = datetime.datetime(year=year_sub)
+    return birthday.year > today_minus_years.year
+
+# return whether or not the birthday year is larger than the year 150 years ago today.
+# true if the birthday is valid and larger than the year 150 years ago.
+
 
 
 
@@ -218,3 +235,4 @@ def validate_gedcom_file(directory):
 
 if __name__ == "__main__":
     unittest.main()
+
