@@ -1,18 +1,7 @@
 """
-Project 02
-Author: Chris Corrado
+Project 03
+Author: Chris C., Jermaine J., Brian P., Sukitha R.
 SSW 555: Agile Methods in Software Engineering
-
-Deliverables:
-
-your program source code
-your test GEDCOM file
-the output of running your program on your test GEDCOM file
-the output of running your program against the input test file on Canvas
-
-Created January 30th, 2018
-Modified February 4th, 2018
-
 """
 
 import os
@@ -81,7 +70,7 @@ class Individual:
         self.spouse = {}
         self.age = ""
         self.alive = True
-        self.death = ""
+        self.death = "NA"
         # TODO define age determinations based on birthday.
 
 
@@ -91,9 +80,9 @@ class Family:
     def __init__(self, unique_id):
         self.id = unique_id
         self.children = {}
-        self.husband_name = ""
-        self.wife_name = ""
-        self.divorced = ""
+        self.husband_name = "NA"
+        self.wife_name = "NA"
+        self.divorced = "NA"
         # TODO Define how to reference names based on IDs
 
 
@@ -145,12 +134,13 @@ def parse_gedcom_file(file_path):
                     # print('<-- {}|{}|{}|{}\n'.format(result[0], result[1], result[2], result[3]))
             data = parse_valid_results(valid_results)
             print_individuals_data(data[1])
-            print_family_data(data[0])
+            print_family_data(data[0], data[1])
 
 
 def print_individuals_data(individual_dict):
     """
     Method to print and build a table of the Individuals from a GEDCOM file.
+    :param individual_data -- Dictionary containing all Individuals. Key == ID of Individual
     """
     table = prettytable.PrettyTable()
     table.field_names = ('ID', 'Name', 'Gender', 'Birthday', 'Age', 'Alive', 'Death', 'Child', 'Spouse')
@@ -162,16 +152,29 @@ def print_individuals_data(individual_dict):
     print(table.get_string())
 
 
-def print_family_data(family_dict):
+def print_family_data(family_dict, individual_data):
     """
     Method to print and build a table of the Families from a GEDCOM file.
+    :param family_dict -- Dictionary containing all families. Key == ID of family
+    :param individual_data -- Dictionary containing all Individuals. Key == ID of Individual
     """
     table = prettytable.PrettyTable()
     table.field_names = ('ID', 'Married', 'Divorced', 'Husband ID', 'Husband Name', 'Wife ID', 'Wife Name', 'Children')
     for fam_id, family in sorted(family_dict.items()):
-        table.add_row(
-            [family.id, family.married, family.divorced, family.husband_id, family.husband_name, family.wife_id,
-             family.wife_name, family.children])
+        wife_name = ""
+        husband_name = ""
+        try:
+            wife_name = individual_data[family.wife_id].name
+        except KeyError:
+            print("No Wife with ID: ", family.wife_id)
+
+        try:
+            husband_name = individual_data[family.husband_id].name
+        except KeyError:
+            print("No Husband with ID: ", family.husband_id)
+
+        table.add_row([family.id, family.married, family.divorced, family.husband_id, husband_name, family.wife_id,
+                       wife_name, family.children])
     print("Families")
     print(table.get_string())
 
