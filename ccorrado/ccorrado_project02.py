@@ -203,18 +203,17 @@ def parse_valid_results(results):
 
 
 
-def verify_date(birthday): #verify birthday is less than 150 years
-    year = date_value[3].split()[2]
-    month = date_value[3].split()[1]
-    day = date_value[3].split()[0]
-    birthday = datetime.date(year, month, day)
-    today = datetime.datetime.now()
-    year_sub = today.year - 150
-    today_minus_years = datetime.datetime(year=year_sub)
-    return birthday.year > today_minus_years.year
+def calculate_age(birthday):
+    """
+    Calculate Age Based on Birthday
 
-# return whether or not the birthday year is larger than the year 150 years ago today.
-# true if the birthday is valid and larger than the year 150 years ago.
+    :param birthday: DY MON YEAR
+    :return: Integer representation of Age
+    """
+    birthday = datetime.datetime.strptime(birthday, '%d %b %Y')
+    today = datetime.datetime.now()
+    return abs(int(abs(today.year)) - int(abs(birthday.year)))
+
 
 
 
