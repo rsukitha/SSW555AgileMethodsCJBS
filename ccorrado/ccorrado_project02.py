@@ -83,7 +83,6 @@ class Family:
         self.husband_name = "NA"
         self.wife_name = "NA"
         self.divorced = "NA"
-        # TODO Define how to reference names based on IDs
 
 
 def validate_tag_line(gedcom_line):
