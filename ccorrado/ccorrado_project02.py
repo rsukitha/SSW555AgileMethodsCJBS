@@ -82,7 +82,7 @@ class Individual:
         self.age = ""
         self.alive = True
         self.death = ""
-        # TODO define age and alive determinations based on data.
+        # TODO define age determinations based on birthday.
 
 
 class Family:
@@ -206,6 +206,7 @@ def parse_valid_results(results):
             indi = individuals.get(current_indi_id)
             date = next(results_iter)
             indi.death = date[3]
+            indi.alive = False
         elif result[1] == 'FAMC':
             individuals.get(current_indi_id).child[result[3]] = result[3]
         elif result[1] == 'FAMS':
