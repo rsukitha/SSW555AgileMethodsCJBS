@@ -83,7 +83,7 @@ class Individual:
 
     def __init_(self, birthday):
         self.date = birthday
-        self.assertEqual(('False'), verify_date(self.date))
+        self.assertLessEqual(('150'), verify_date(self.date))
 
 
     def __init_(self, age):
