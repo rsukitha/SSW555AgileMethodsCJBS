@@ -18,6 +18,8 @@ Modified February 4th, 2018
 import os
 import unittest
 
+import prettytable as prettytable
+
 
 class GedcomParseTest(unittest.TestCase):
     """
@@ -25,7 +27,7 @@ class GedcomParseTest(unittest.TestCase):
     """
 
     def test_parser(self):
-        # parse_gedcom_file("./proj02test.ged")
+        parse_gedcom_file("./proj02test.ged")
         parse_gedcom_file("./ccorradop02test.ged")
 
     def test_valid_tag(self):
@@ -77,15 +79,21 @@ class Individual:
         self.id = unique_id
         self.child = {}
         self.spouse = {}
+        self.age = ""
+        self.alive = True
+        self.death = ""
         # TODO define age and alive determinations based on data.
 
 
 class Family:
-    __slots__ = "id", "married", "married", "husband_id", "husband_name", "wife_id", "wife_name", "children"
+    __slots__ = "id", "married", "divorced", "husband_id", "husband_name", "wife_id", "wife_name", "children"
 
     def __init__(self, unique_id):
         self.id = unique_id
         self.children = {}
+        self.husband_name = ""
+        self.wife_name = ""
+        self.divorced = ""
         # TODO Define how to reference names based on IDs
 
 
@@ -129,13 +137,43 @@ def parse_gedcom_file(file_path):
         with file:
             valid_results = []
             for line in file.readlines():
-                print('--> ' + line.strip())
+                # print('--> ' + line.strip())
                 result = validate_tag_line(line)
                 if result[2] == 'Y':
                     valid_results.append(result)
-                print('<-- {}|{}|{}|{}\n'.format(result[0], result[1], result[2], result[3]))
-            parse_valid_results(valid_results)
-            # TODO print data to tables
+
+                    # print('<-- {}|{}|{}|{}\n'.format(result[0], result[1], result[2], result[3]))
+            data = parse_valid_results(valid_results)
+            print_individuals_data(data[1])
+            print_family_data(data[0])
+
+
+def print_individuals_data(individual_dict):
+    """
+    Method to print and build a table of the Individuals from a GEDCOM file.
+    """
+    table = prettytable.PrettyTable()
+    table.field_names = ('ID', 'Name', 'Gender', 'Birthday', 'Age', 'Alive', 'Death', 'Child', 'Spouse')
+    for indi_id, individual in sorted(individual_dict.items()):
+        table.add_row(
+            [individual.id, individual.name, individual.gender, individual.birthday, individual.age, individual.alive,
+             individual.death, individual.child, individual.spouse])
+    print("Individuals")
+    print(table.get_string())
+
+
+def print_family_data(family_dict):
+    """
+    Method to print and build a table of the Families from a GEDCOM file.
+    """
+    table = prettytable.PrettyTable()
+    table.field_names = ('ID', 'Married', 'Divorced', 'Husband ID', 'Husband Name', 'Wife ID', 'Wife Name', 'Children')
+    for fam_id, family in sorted(family_dict.items()):
+        table.add_row(
+            [family.id, family.married, family.divorced, family.husband_id, family.husband_name, family.wife_id,
+             family.wife_name, family.children])
+    print("Families")
+    print(table.get_string())
 
 
 def parse_valid_results(results):
