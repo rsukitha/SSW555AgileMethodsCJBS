@@ -8,6 +8,7 @@ import os
 import unittest
 
 import prettytable as prettytable
+import datetime
 
 
 class GedcomParseTest(unittest.TestCase):
@@ -203,10 +204,12 @@ def parse_valid_results(results):
         elif result[1] == 'BIRT':
             indi = individuals.get(current_indi_id)
             date = next(results_iter)
+            validate_dates(date, current_indi_id)
             indi.birthday = date[3]
         elif result[1] == 'DEAT':
             indi = individuals.get(current_indi_id)
             date = next(results_iter)
+            validate_dates(date, current_indi_id)
             indi.death = date[3]
             indi.alive = False
         elif result[1] == 'FAMC':
@@ -222,13 +225,59 @@ def parse_valid_results(results):
         elif result[1] == 'MARR':
             fam = families.get(current_fam_id)
             date = next(results_iter)
+            validate_dates(date, current_fam_id)
+            validate_marriage_date(indi.birthday, date, current_indi_id)
             fam.married = date[3]
         elif result[1] == 'DIV':
             fam = families.get(current_fam_id)
             date = next(results_iter)
+            validate_dates(date, current_fam_id)
             fam.divorced = date[3]
     return families, individuals
 
+def get_date(date): #Change the string date to date format
+      
+      month = {"JAN": 1, "FEB":2, "MAR":3, "APR":4, "MAY":5, "JUN":6, "JUL":7, "AUG":8, "SEP":9, "OCT":10, "NOV":11, "DEC":12}
+      split_date = date[3].split(" ")
+      given_year = int(split_date[2])
+      given_month = month[split_date[1]]
+      given_day = int(split_date[0])
+      given_date = datetime.date(given_year, given_month, given_day)
+      
+      return given_date
+      
+      
+def validate_dates(date, current_indi_id): #Validate the birth, death, marriage, divorce date with today    
+      
+      current_date = datetime.datetime.now()
+      year = current_date.year
+      month = current_date.month
+      day = current_date.day
+      today = datetime.date(year, month, day)
+
+      given_date = get_date(date)
+
+      if given_date > today:
+            print("Invalid! Birth, Marriage, Divorce or Death dates should not be after today. User ID is: ", current_indi_id, " and today is: ", today)            
+      else:
+            pass
+
+def validate_marriage_date(birth, marriage, current_indi_id): #Check if person is born before his/her marriage    
+      month = {"JAN": 1, "FEB":2, "MAR":3, "APR":4, "MAY":5, "JUN":6, "JUL":7, "AUG":8, "SEP":9, "OCT":10, "NOV":11, "DEC":12}
+      
+      birth = birth.split(" ")
+      birth_year = int(birth[2])
+      birth_month = month[birth[1]]
+      birth_day = int(birth[0])
+      birth_date = datetime.date(birth_year, birth_month, birth_day)
+      
+      marriage_date = get_date(marriage)
+
+      if marriage_date < birth_date:
+            print("Invalid! Birth should occur before marriage for user: ", current_indi_id)
+      else:
+            pass      
+      
 
 def validate_gedcom_file(directory):
     """
