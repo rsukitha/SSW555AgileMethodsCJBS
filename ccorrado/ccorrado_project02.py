@@ -6,6 +6,7 @@ SSW 555: Agile Methods in Software Engineering
 
 import os
 import unittest
+import datetime
 
 import prettytable as prettytable
 
@@ -68,10 +69,22 @@ class Individual:
         self.id = unique_id
         self.child = {}
         self.spouse = {}
+        
         self.age = ""
         self.alive = True
         self.death = "NA"
         # TODO define age determinations based on birthday.
+
+
+    def __init_(self, birthday):
+        self.date = birthday
+        self.assertLessEqual(('150'), verify_date(self.date))
+
+
+    def __init_(self, age):
+        self.age = age
+        self.assertLessEqual(('14'), verify_date(self.age))
+
 
 
 class Family:
@@ -129,7 +142,7 @@ def parse_gedcom_file(file_path):
                 result = validate_tag_line(line)
                 if result[2] == 'Y':
                     valid_results.append(result)
-
+                    
                     # print('<-- {}|{}|{}|{}\n'.format(result[0], result[1], result[2], result[3]))
             data = parse_valid_results(valid_results)
             print_individuals_data(data[1])
@@ -176,7 +189,6 @@ def print_family_data(family_dict, individual_data):
                        wife_name, family.children])
     print("Families")
     print(table.get_string())
-
 
 def parse_valid_results(results):
     """
@@ -229,6 +241,22 @@ def parse_valid_results(results):
             fam.divorced = date[3]
     return families, individuals      
 
+
+def calculate_age(birthday):
+    """
+    Calculate Age Based on Birthday
+
+    :param birthday: DY MON YEAR
+    :return: Integer representation of Age
+    """
+    birthday = datetime.datetime.strptime(birthday, '%d %b %Y')
+    today = datetime.datetime.now()
+    return abs(int(abs(today.year)) - int(abs(birthday.year)))
+
+
+
+
+
 def validate_gedcom_file(directory):
     """
     Method to validate the Gedcom File based on a dir containing the file
@@ -245,3 +273,4 @@ def validate_gedcom_file(directory):
 
 if __name__ == "__main__":
     unittest.main()
+
