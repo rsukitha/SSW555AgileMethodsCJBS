@@ -29,7 +29,7 @@ class Individual:
     def verify_birthday(date):
         """
         Verify birthday is less than 150 years
-        :param birthday: DY MON YEAR
+        :param date: DY MON YEAR
         :return: True if the birthday is valid and larger than the year 150 years ago.
         """
         year = int(date.split()[2])
