@@ -1,3 +1,6 @@
+"""
+Top Level class to execute GEDCOM parsing and manipulation for later storage.
+"""
 import prettytable
 
 from models.Family import Family
@@ -81,11 +84,13 @@ def parse_valid_results(results):
             indi = individuals.get(current_indi_id)
             date = next(results_iter)
             indi.birthday = date[3]
+            indi.set_age()
         elif result[1] == 'DEAT':
             indi = individuals.get(current_indi_id)
             date = next(results_iter)
             indi.death = date[3]
             indi.alive = False
+            indi.set_age()
         elif result[1] == 'FAMC':
             individuals.get(current_indi_id).child[result[3]] = result[3]
         elif result[1] == 'FAMS':
@@ -147,3 +152,4 @@ def print_family_data(family_dict, individual_data):
                        wife_name, family.children])
     print("Families")
     print(table.get_string())
+
