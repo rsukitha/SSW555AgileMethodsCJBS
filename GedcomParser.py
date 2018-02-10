@@ -115,7 +115,7 @@ def parse_valid_results(results):
 def print_individuals_data(individual_dict):
     """
     Method to print and build a table of the Individuals from a GEDCOM file.
-    :param individual_data -- Dictionary containing all Individuals. Key == ID of Individual
+    :param individual_dict -- Dictionary containing all Individuals. Key == ID of Individual
     """
     table = prettytable.PrettyTable()
     table.field_names = ('ID', 'Name', 'Gender', 'Birthday', 'Age', 'Alive', 'Death', 'Child', 'Spouse')
@@ -152,4 +152,3 @@ def print_family_data(family_dict, individual_data):
                        wife_name, family.children])
     print("Families")
     print(table.get_string())
-
