@@ -1,16 +1,24 @@
 import unittest
 
-from GedcomParser import parse_gedcom_file, validate_tag_line
+from GedcomParser import parse_gedcom_file, validate_tag_line, print_individuals_data, print_family_data
 
 
 class GedcomParseTest(unittest.TestCase):
     """
-    Gedcom Data Parsing Tests.
+    Gedcom Data Parsing and Printing Tests.
     """
 
     def test_parser(self):
-        parse_gedcom_file("./sampledata/proj02test.ged")
-        parse_gedcom_file("./sampledata/ccorradop02test.ged")
+        proj2_test_data = parse_gedcom_file("./sampledata/proj02test.ged")
+        self.assertTrue(proj2_test_data != [])
+        print_individuals_data(proj2_test_data[1])
+        print_family_data(proj2_test_data[0], proj2_test_data[1])
+
+    def test_larger_dataset_parser(self):
+        other_test_data = parse_gedcom_file("./sampledata/ccorradop02test.ged")
+        self.assertTrue(other_test_data != [])
+        print_individuals_data(other_test_data[1])
+        print_family_data(other_test_data[0], other_test_data[1])
 
     def test_valid_tag(self):
         self.assertEqual(('0', 'FAM', 'Y', 'f2'), validate_tag_line("0 f2 FAM"))  # Assert 0 f2 FAM is valid
