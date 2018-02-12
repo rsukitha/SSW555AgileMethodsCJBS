@@ -38,8 +38,21 @@ class Individual:
         birthday = datetime.date(year, month, day)
         today = datetime.datetime.now()
         year_sub = today.year - 150
-        today_minus_years = datetime.datetime(year=year_sub)
-        return birthday.year > today_minus_years.year
+        today_minus_years = datetime.datetime(year=year_sub,month=month,day=day)
+
+        if birthday.year > today_minus_years.year:
+           return (birthday.year > today_minus_years.year) 
+
+        elif birthday.year < today_minus_years.year:
+           return (birthday.year < today_minus_years.year)
+
+        elif birthday.year == today_minus_years.year:
+           return (birthday.year == today_minus_years.year) 
+
+	
+        elif birthday.year != today_minus_years.year:
+           return (birthday.year != today_minus_years.year)
+
 
     def calculate_age(self):
         """

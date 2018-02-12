@@ -1,7 +1,7 @@
 import unittest
 
 from GedcomParser import parse_gedcom_file, validate_tag_line
-
+from models.Individual import Individual
 
 class GedcomParseTest(unittest.TestCase):
     """
@@ -52,6 +52,56 @@ class GedcomParseTest(unittest.TestCase):
     def test_valid_tag11(self):
         self.assertEqual(('0', 'WIFE', 'N', ''),
                          validate_tag_line("0 WIFE"))  # Assert 0 WIFE is invalid
+
+
+class ValidateBirthdayTest(unittest.TestCase):
+    def test_valid_birthday_True(self):
+        """
+        Testing birthday is less than 150 years.
+
+        """
+        date ='04 01 2011'
+        self.assertTrue(Individual.verify_birthday(date))
+
+
+    def test_invalid_birthday_greater(self):
+        """
+        Testing birthday is greater than 150 years.
+
+        """
+        date = "04 01 2099"
+        self.assertFalse(Individual.verify_birthday(date))
+
+
+    def test_valid_birthday_IsnotNone(self):
+        """
+        Testing birthday is not none.
+
+        """
+        date = "04 07 2014"
+        self.assertIsNotNone(Individual.verify_birthday(date))
+
+
+    def test_valid_birthday_equal(self):
+        """
+        Testing birthday is equal to date 150 years 
+
+        """
+        date = "04 07 1870"
+        self.assertEqual(Individual.verify_birthday(date))
+
+
+
+    def test_valid_birthday_not_equal(self):
+        """
+        Testing birthday is not equal to date 150 years
+
+        """
+        date = "04 07 1910"
+        self.assertNotEqual(Individual.verify_birthday(date))
+
+	
+
 
 
 if __name__ == "__main__":
