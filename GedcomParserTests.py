@@ -54,5 +54,52 @@ class GedcomParseTest(unittest.TestCase):
                          validate_tag_line("0 WIFE"))  # Assert 0 WIFE is invalid
 
 
+class ValidateBirthdayTest(unittest.TestCase):
+    def test_valid_birthday_True(self):
+        """
+        Testing birthday is less than 150 years.
+
+        """
+        date = "04 JAN 2011"
+        self.assertTrue(individual.verify_birthday(date))
+
+    def test_invalid_birthday_greater(self):
+        """
+        Testing birthday is greater than 150 years.
+
+        """
+        date = "04 JAN 2099"
+        self.assertFalse(individual.verify_birthday(date))
+
+
+    def test_valid_birthday_equal(self):
+
+        """
+        Testing birthday is equal to 150 years.
+
+        """
+        date = "04 JAN 2015"
+        self.assertEqual(individual.verify_birthday(date))
+
+
+    def test_valid_birthday_notEqual(self):
+        """
+        Testing birthday is equal to 150 years.
+
+        """
+        date = "04 JAN 2009"
+        self.assertNotEqual(individual.verify_birthday(date))
+
+
+    def test_valid_birthday_IsnotNone(self):
+        """
+        Testing birthday is not none.
+
+        """
+        date = "04 JAN 2011"
+        self.assertIsNotNone(individual.verify_birthday(date))
+
+
+
 if __name__ == "__main__":
     unittest.main()
