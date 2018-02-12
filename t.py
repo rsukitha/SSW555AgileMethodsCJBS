@@ -12,4 +12,4 @@ year_sub = today.year - 150
 print (today.year)
 print (year_sub)
 today_minus_years = datetime.datetime(year=year_sub,month=month,day=day)
-return (birthday.year == today_minus_years.year)
+print (birthday.year == today_minus_years.year)

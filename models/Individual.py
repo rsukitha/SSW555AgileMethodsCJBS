@@ -48,7 +48,6 @@ class Individual:
 
         elif birthday.year == today_minus_years.year:
            return (birthday.year == today_minus_years.year) 
-
 	
         elif birthday.year != today_minus_years.year:
            return (birthday.year != today_minus_years.year)

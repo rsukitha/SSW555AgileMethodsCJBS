@@ -69,8 +69,8 @@ class ValidateBirthdayTest(unittest.TestCase):
         Testing birthday is greater than 150 years.
 
         """
-        date = "04 01 2099"
-        self.assertFalse(Individual.verify_birthday(date))
+        date = "04 01 1200"
+        self.assertGreaterEqual(True, Individual.verify_birthday(date))
 
 
     def test_valid_birthday_IsnotNone(self):
@@ -88,7 +88,7 @@ class ValidateBirthdayTest(unittest.TestCase):
 
         """
         date = "04 07 1870"
-        self.assertEqual(Individual.verify_birthday(date))
+        self.assertEqual(True, Individual.verify_birthday(date))
 
 
 
@@ -98,7 +98,7 @@ class ValidateBirthdayTest(unittest.TestCase):
 
         """
         date = "04 07 1910"
-        self.assertNotEqual(Individual.verify_birthday(date))
+        self.assertNotEqual('False', Individual.verify_birthday(date))
 
 	
 
