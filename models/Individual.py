@@ -3,6 +3,7 @@ Class to represent an Individual based on GEDCOM Data
 """
 import datetime
 
+
 class Individual:
     __slots__ = "id", "name", "gender", "birthday", "age", "alive", "death", "child", "spouse"
 
@@ -37,7 +38,7 @@ class Individual:
         birthday = datetime.date(year, month, day)
         today = datetime.datetime.now()
         year_sub = today.year - 150
-        today_minus_years = datetime.datetime(year=year_sub, month=month, day=day)
+        today_minus_years = datetime.datetime(year=year_sub)
         return birthday.year > today_minus_years.year
 
     def calculate_age(self):
@@ -54,19 +55,3 @@ class Individual:
             return int(abs(death_date.year)) - int(abs(birthday.year))
         today = datetime.datetime.now()
         return int(abs(today.year)) - int(abs(birthday.year))
-
-
-
-    def calulate_marriage_age(birthday):
-        """
-        Calculate marriage age
-        """
-        if (Individual.verify_birthday(birthday)):
-            year = int(birthday.split()[2])
-            month = int(birthday.split()[1])
-            day = int(birthday.split()[0])
-            birthday = datetime.date(year, month, day)
-            today = datetime.datetime.now()
-            print ((int(abs(today.year)) - int(abs(birthday.year)) - 14))
-            return(int(abs(today.year)) - int(abs(birthday.year)) - 14 >= 14)
-

@@ -1,7 +1,7 @@
 import unittest
 
 from GedcomParser import parse_gedcom_file, validate_tag_line
-from models.Individual import Individual
+
 
 class GedcomParseTest(unittest.TestCase):
     """
@@ -52,13 +52,6 @@ class GedcomParseTest(unittest.TestCase):
     def test_valid_tag11(self):
         self.assertEqual(('0', 'WIFE', 'N', ''),
                          validate_tag_line("0 WIFE"))  # Assert 0 WIFE is invalid
-
-
-class marriage_age_test(unittest.TestCase):
-    def test_valid_marriage_age(self):
-        self.assertTrue(Individual.calulate_marriage_age('21 07 1976'))
-
-
 
 
 if __name__ == "__main__":
