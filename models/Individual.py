@@ -57,7 +57,6 @@ class Individual:
 
 
 
-
     def calulate_marriage_age(birthday):
         """
         Calculate marriage age
