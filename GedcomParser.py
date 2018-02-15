@@ -27,9 +27,7 @@ def parse_gedcom_file(file_path):
                     valid_results.append(result)
 
                     # print('<-- {}|{}|{}|{}\n'.format(result[0], result[1], result[2], result[3]))
-            data = parse_valid_results(valid_results)
-            print_individuals_data(data[1])
-            print_family_data(data[0], data[1])
+            return parse_valid_results(valid_results)
 
 
 def validate_tag_line(gedcom_line):
@@ -139,12 +137,16 @@ def print_family_data(family_dict, individual_data):
         wife_name = ""
         husband_name = ""
         try:
-            wife_name = individual_data[family.wife_id].name
+            wife = individual_data[family.wife_id]
+            if wife.validate_role("WIFE"):
+                wife_name = wife.name
         except KeyError:
             print("No Wife with ID: ", family.wife_id)
 
         try:
-            husband_name = individual_data[family.husband_id].name
+            husband = individual_data[family.husband_id]
+            if husband.validate_role("HUSB"):
+                husband_name = husband.name
         except KeyError:
             print("No Husband with ID: ", family.husband_id)
 

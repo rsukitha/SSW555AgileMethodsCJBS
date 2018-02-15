@@ -13,6 +13,7 @@ class Individual:
         self.spouse = {}
         self.age = ""
         self.birthday = ""
+        self.gender = ""
         self.alive = True
         self.death = "NA"
 
@@ -50,8 +51,22 @@ class Individual:
         :return: Integer representation of Age
         """
         birthday = datetime.datetime.strptime(self.birthday, '%d %b %Y')
+        today = datetime.datetime.now()
         if self.death != "NA":
             death_date = datetime.datetime.strptime(self.death, '%d %b %Y')
-            return int(abs(death_date.year)) - int(abs(birthday.year))
-        today = datetime.datetime.now()
+            if death_date <= today:
+                return int(abs(death_date.year)) - int(abs(birthday.year))
         return int(abs(today.year)) - int(abs(birthday.year))
+
+    def validate_role(self, role):
+        """
+        Method to validate gender to role for an individual.
+
+        :param role: "WIFE" or "HUSB"
+        :return: True if gender is valid for role.
+        """
+        if self.gender == "M" and role == "HUSB":
+            return True
+        if self.gender == "F" and role == "WIFE":
+            return True
+        return False
