@@ -2,6 +2,7 @@
 Top Level class to execute GEDCOM parsing and manipulation for later storage.
 """
 import prettytable
+import collections
 
 from models.Family import Family
 from models.Individual import Individual
@@ -154,3 +155,31 @@ def print_family_data(family_dict, individual_data):
                        wife_name, family.children])
     print("Families")
     print(table.get_string())
+
+def unique_name_b_date(ind_dict):
+    """
+    Determines if individuals have unique names and birth dates"
+    :param: ind_dict -- Individual dictionary containing all unique individuals
+    :return: two lists for the individual ids which have identical names and identical birthdays or both.
+    """
+    name_list=[]
+    birth_list=[]
+    same_name_id=[]
+    same_b_date_id=[]
+    for indi_id, individual in (ind_dict.items()):
+            name_list.append(individual.name)
+            birth_list.append(individual.birthday)
+    y=collections.Counter(name_list) #the collection of names with number of occurences is
+    x=[i for i in y if y[i]>1] # the duplicate names list
+    
+    v=collections.Counter(birth_list) #the collection of birthdays
+    w=[i for i in v if v[i]>1]  # the duplicate bithday list 
+
+    
+    for indi_id, individual in (ind_dict.items()):
+        if  individual.name in x:       # store the ids of individuals with same name
+            same_name_id.append(indi_id)
+        if individual.birthday in w:    # store the ids of idividuals with the same birthday
+            same_b_date_id.append(indi_id)
+
+    return same_name_id, same_b_date_id
