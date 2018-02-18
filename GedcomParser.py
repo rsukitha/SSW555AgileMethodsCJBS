@@ -150,6 +150,8 @@ def print_family_data(family_dict, individual_data):
         except KeyError:
             print("No Husband with ID: ", family.husband_id)
 
+        family.validate_children(individual_data)
+
         table.add_row([family.id, family.married, family.divorced, family.husband_id, husband_name, family.wife_id,
                        wife_name, family.children])
     print("Families")
