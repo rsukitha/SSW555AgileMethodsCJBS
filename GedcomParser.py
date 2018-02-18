@@ -160,26 +160,30 @@ def unique_name_b_date(ind_dict):
     """
     Determines if individuals have unique names and birth dates"
     :param: ind_dict -- Individual dictionary containing all unique individuals
-    :return: two lists for the individual ids which have identical names and identical birthdays or both.
+    :return: True if individuals names and birth dates are unique or False otherwise and return error string.
     """
     name_list=[]
     birth_list=[]
-    same_name_id=[]
-    same_b_date_id=[]
+    unique_name=True
+    unique_birth=True
+    error_str=''
+    
     for indi_id, individual in (ind_dict.items()):
             name_list.append(individual.name)
             birth_list.append(individual.birthday)
     y=collections.Counter(name_list) #the collection of names with number of occurences is
     x=[i for i in y if y[i]>1] # the duplicate names list
-    
+
     v=collections.Counter(birth_list) #the collection of birthdays
     w=[i for i in v if v[i]>1]  # the duplicate bithday list 
 
     
     for indi_id, individual in (ind_dict.items()):
         if  individual.name in x:       # store the ids of individuals with same name
-            same_name_id.append(indi_id)
+            error_str=error_str+'ERROR: INDIVIDUAL: US23: Individual %s named %s is a duplicate.' % (str(individual.id),str(individual.name))
+            unique_name=False
         if individual.birthday in w:    # store the ids of idividuals with the same birthday
-            same_b_date_id.append(indi_id)
-
-    return same_name_id, same_b_date_id
+            error_str=error_str+'ERROR: INDIVIDUAL: US23: Indivdual named %s birth date of %s is a duplicate.'% (str(individual.name),str(individual.birthday))
+            unique_birth=False
+    print(error_str)
+    return (unique_name and unique_birth), error_str
