@@ -4,6 +4,7 @@ Class to represent an Individual based on GEDCOM Data
 import datetime
 from models.Family import Family
 
+
 class Individual:
     __slots__ = "id", "name", "gender", "birthday", "age", "alive", "death", "child", "spouse"
 
@@ -39,9 +40,8 @@ class Individual:
         birthday = datetime.date(year, month, day)
         today = datetime.datetime.now()
         year_sub = today.year - 150
-        today_minus_years = datetime.datetime(year=year_sub,month=month,day=day)
+        today_minus_years = datetime.datetime(year=year_sub)
         return birthday.year > today_minus_years.year
-
 
     def calculate_age(self):
         """
@@ -59,7 +59,6 @@ class Individual:
                 return int(abs(death_date.year)) - int(abs(birthday.year))
         return int(abs(today.year)) - int(abs(birthday.year))
 
-
     def validate_role(self, role):
         """
         Method to validate gender to role for an individual.
@@ -74,15 +73,15 @@ class Individual:
         return False
 
 
-    def validate_marriage(indivi_date):
+
+    def validate_marriage(indivi_birthday):
         """
         verify if marriage age is valid
 
         """
         if Individual.id == Family.wife_id or Individual.id == Family.husband_id:
-            if Individual.calculate_age(Individual.birthday) >= 14:
+            if Individual.calculate_age(indivi_birthday) >= 14:
                 return (True)
 
             else:
                 return (False)
-

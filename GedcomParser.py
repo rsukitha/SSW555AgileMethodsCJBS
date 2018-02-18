@@ -27,8 +27,6 @@ def parse_gedcom_file(file_path):
                     valid_results.append(result)
 
                     # print('<-- {}|{}|{}|{}\n'.format(result[0], result[1], result[2], result[3]))
-            test1=parse_valid_results(valid_results)
-            living_marr(test1)
             return parse_valid_results(valid_results)
 
 
