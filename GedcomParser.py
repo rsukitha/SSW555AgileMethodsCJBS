@@ -171,9 +171,9 @@ def living_marr(data_liv_mar):
             
             for ids_marr in aliv_married:
                 for individuals in sorted(data_liv_mar[1].items()):
-                    if individuals[1].husband_id or individuals[1].wife_id == ids_marr:
-                        if calculate_age(Individual.birthday) >= 14:
-                                return  (calculate_age(Individual.birthday) >= 14)
+                    if individuals[1] == ids_marr:
+                        if Individual.calculate_age(individuals[1].birthday) >= 14:
+                                return  (Individual.calculate_age(individuals[1].birthday) >= 14)
 
                         else:
-                            print (invalid birthday for marriage!)
+                            print ('invalid birthday for marriage!')
