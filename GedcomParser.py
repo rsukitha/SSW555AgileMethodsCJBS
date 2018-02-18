@@ -27,6 +27,8 @@ def parse_gedcom_file(file_path):
                     valid_results.append(result)
 
                     # print('<-- {}|{}|{}|{}\n'.format(result[0], result[1], result[2], result[3]))
+            test1=parse_valid_results(valid_results)
+            living_marr(test1)
             return parse_valid_results(valid_results)
 
 
@@ -154,3 +156,24 @@ def print_family_data(family_dict, individual_data):
                        wife_name, family.children])
     print("Families")
     print(table.get_string())
+
+
+
+
+def living_marr(data_liv_mar):
+            newarr=[]
+            fam=[]
+            aliv_married=set()
+            for c in sorted(data_liv_mar[0].items()):
+                for b in sorted(data_liv_mar[1].items()):
+                    if b[1].alive == True and (b[0] == c[1].husband_id or b[0] == c[1].wife_id):
+                        aliv_married.add(str(b[0]))
+            
+            for ids_marr in aliv_married:
+                for individuals in sorted(data_liv_mar[1].items()):
+                    if individuals[1].husband_id or individuals[1].wife_id == ids_marr:
+                        if calculate_age(Individual.birthday) >= 14:
+                                return  (calculate_age(Individual.birthday) >= 14)
+
+                        else:
+                            print (invalid birthday for marriage!)
