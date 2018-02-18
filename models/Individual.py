@@ -59,6 +59,7 @@ class Individual:
                 return int(abs(death_date.year)) - int(abs(birthday.year))
         return int(abs(today.year)) - int(abs(birthday.year))
 
+
     def validate_role(self, role):
         """
         Method to validate gender to role for an individual.
@@ -78,11 +79,10 @@ class Individual:
         verify if marriage age is valid
 
         """
-            if Individual.id == Family.wife_id or Individual.id == Family.husband_id:
-                if Individual.calculate_age(Individual.birthday) >= 14:
-                    return (True)
+        if Individual.id == Family.wife_id or Individual.id == Family.husband_id:
+            if Individual.calculate_age(Individual.birthday) >= 14:
+                return (True)
 
-                else:
-                    print ('invalid birthday for marriage!')
-                    return (False)
+            else:
+                return (False)
 
