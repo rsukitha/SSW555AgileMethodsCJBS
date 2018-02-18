@@ -2,6 +2,7 @@
 Class to represent an Individual based on GEDCOM Data
 """
 import datetime
+from models.Family import Family
 
 
 class Individual:
@@ -70,3 +71,17 @@ class Individual:
         if self.gender == "F" and role == "WIFE":
             return True
         return False
+
+
+
+    def validate_marriage(indivi_birthday):
+        """
+        verify if marriage age is valid
+
+        """
+        if Individual.id == Family.wife_id or Individual.id == Family.husband_id:
+            if Individual.calculate_age(indivi_birthday) >= 14:
+                return (True)
+
+            else:
+                return (False)
