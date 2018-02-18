@@ -39,8 +39,9 @@ class Individual:
         birthday = datetime.date(year, month, day)
         today = datetime.datetime.now()
         year_sub = today.year - 150
-        today_minus_years = datetime.datetime(year=year_sub)
+        today_minus_years = datetime.datetime(year=year_sub,month=month,day=day)
         return birthday.year > today_minus_years.year
+
 
     def calculate_age(self):
         """
@@ -74,13 +75,14 @@ class Individual:
 
     def validate_marriage(indivi_date):
         """
-        verify if marriage age is valid 
-        
+        verify if marriage age is valid
+
         """
             if Individual.id == Family.wife_id or Individual.id == Family.husband_id:
                 if Individual.calculate_age(Individual.birthday) >= 14:
-                    return Individual.calculate_age(Individual.birthday)
+                    return (True)
 
                 else:
-                    print (invalid birthday for marriage!)
+                    print ('invalid birthday for marriage!')
+                    return (False)
 

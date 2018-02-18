@@ -156,24 +156,3 @@ def print_family_data(family_dict, individual_data):
                        wife_name, family.children])
     print("Families")
     print(table.get_string())
-
-
-
-
-def living_marr(data_liv_mar):
-            newarr=[]
-            fam=[]
-            aliv_married=set()
-            for c in sorted(data_liv_mar[0].items()):
-                for b in sorted(data_liv_mar[1].items()):
-                    if b[1].alive == True and (b[0] == c[1].husband_id or b[0] == c[1].wife_id):
-                        aliv_married.add(str(b[0]))
-            
-            for ids_marr in aliv_married:
-                for individuals in sorted(data_liv_mar[1].items()):
-                    if individuals[1] == ids_marr:
-                        if Individual.calculate_age(individuals[1].birthday) >= 14:
-                                return  (Individual.calculate_age(individuals[1].birthday) >= 14)
-
-                        else:
-                            print ('invalid birthday for marriage!')
