@@ -70,6 +70,9 @@ class Individual:
             return True
         if self.gender == "F" and role == "WIFE":
             return True
+        print(
+            "ERROR: INDIVIDUAL: US21: {}: Spouse with gender: {} and role {} do not match".format(self.id, self.gender,
+                                                                                                  role))
         return False
 
 

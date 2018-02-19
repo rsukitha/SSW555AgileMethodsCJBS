@@ -1,0 +1,58 @@
+0 NOTE the lines until the next note are all correct
+0 HEAD
+0 jc INDI
+1 NAME Jimmy /Connors/
+1 SEX M
+1 BIRT
+2 DATE 1 JAN 1950
+1 DEAT
+2 DATE 31 DEC 2099
+1 FAMC f1
+1 FAMS f2
+0 ce INDI
+1 NAME Cheryl /Connors/
+1 SEX F
+1 BIRT
+2 DATE 1 FEB 1954
+1 DEAT
+2 DATE 31 DEC 2099
+1 FAMC f1
+1 FAMS f2
+0 hs INDI
+1 NAME Herman /Smith/
+1 SEX M
+1 BIRT
+2 DATE 2 MAR 2016
+1 FAMC f2
+0 NOTE Jake has same birthday as Herman
+0 hs2 INDI
+1 NAME Jake /Smith/
+1 SEX M
+1 BIRT
+2 DATE 2 MAR 2016
+1 FAMC f2
+0 NOTE Herman listed twice, with different birthday
+0 hs3 INDI
+1 NAME Herman /Smith/
+1 SEX M
+1 BIRT
+2 DATE 2 MAR 2017
+1 FAMC f2
+0 hs4 INDI
+1 NAME Herman /Smith/
+1 SEX M
+1 BIRT
+2 DATE 2 MAR 2017
+1 FAMC f2
+0 f2 FAM
+1 HUSB jc
+1 WIFE ce
+1 CHIL hs
+1 CHIL hs2
+1 CHIL hs3
+1 CHIL hs4
+1 MARR
+2 DATE 1 JUN 1960
+1 DIV
+2 DATE 1 JUN 1961
+0 TRLR
