@@ -6,7 +6,9 @@ import prettytable
 from models.Family import Family
 from models.Individual import Individual
 import datetime
+import calendar
 
+month = {name: num for num, name in enumerate(calendar.month_abbr) if num}
 
 def parse_gedcom_file(file_path):
     """
@@ -117,15 +119,16 @@ def parse_valid_results(results):
             fam.divorced = date[3]
     return families, individuals
 
+
+
 def get_date(date):
       """
       Method to get the date from input and convert it to Date format
       :param date -- Input line tuple in format (level, tag, valid, arg)      
       """      
-      month = {"JAN": 1, "FEB":2, "MAR":3, "APR":4, "MAY":5, "JUN":6, "JUL":7, "AUG":8, "SEP":9, "OCT":10, "NOV":11, "DEC":12}
       split_date = date[3].split(" ")
       given_year = int(split_date[2])
-      given_month = month[split_date[1]]
+      given_month = month[split_date[1].capitalize()]
       given_day = int(split_date[0])
       given_date = datetime.date(given_year, given_month, given_day)
       
@@ -138,13 +141,7 @@ def validate_dates(date, current_indi_id):
       :param date -- Input line tuple in format (level, tag, valid, arg) 
       :param current_indi_id -- Individual object
       """   
-      current_date = datetime.datetime.now()
-      year = current_date.year
-      month = current_date.month
-      day = current_date.day
-      today = datetime.date(year, month, day)
-      
-
+      today = datetime.date.today()
       given_date = get_date(date)
 
       if given_date > today:
@@ -158,12 +155,11 @@ def validate_marriage_date(birth, marriage, current_fam_id):
       :param birth -- Birthdate of the person
       :param marriage -- Input line tuple in format (level, tag, valid, arg) 
       :param current_fam_id -- Family object
-      """   
-      month = {"JAN": 1, "FEB":2, "MAR":3, "APR":4, "MAY":5, "JUN":6, "JUL":7, "AUG":8, "SEP":9, "OCT":10, "NOV":11, "DEC":12}
+      """
       
       birth = birth.split(" ")
       birth_year = int(birth[2])
-      birth_month = month[birth[1]]
+      birth_month = month[birth[1].capitalize()]
       birth_day = int(birth[0])
       birth_date = datetime.date(birth_year, birth_month, birth_day)
       
