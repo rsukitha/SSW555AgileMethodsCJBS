@@ -164,10 +164,8 @@ def unique_name_b_date(ind_dict):
     """
     name_list=[]
     birth_list=[]
-    unique_name=True
-    unique_birth=True
-    error_str=''
-    
+    unique_data=True
+        
     for indi_id, individual in (ind_dict.items()):
             name_list.append(individual.name)
             birth_list.append(individual.birthday)
@@ -180,10 +178,12 @@ def unique_name_b_date(ind_dict):
     
     for indi_id, individual in (ind_dict.items()):
         if  individual.name in x:       # store the ids of individuals with same name
-            error_str=error_str+'ERROR: INDIVIDUAL: US23: Individual %s named %s is a duplicate.' % (str(individual.id),str(individual.name))
-            unique_name=False
+            print 'ERROR: INDIVIDUAL: US23: Individual %s named %s is a duplicate.' % (str(individual.id),str(individual.name))
+            unique_data=False
+            
+            
         if individual.birthday in w:    # store the ids of idividuals with the same birthday
-            error_str=error_str+'ERROR: INDIVIDUAL: US23: Indivdual named %s birth date of %s is a duplicate.'% (str(individual.name),str(individual.birthday))
-            unique_birth=False
-    print(error_str)
-    return (unique_name and unique_birth), error_str
+            print 'ERROR: INDIVIDUAL: US23: Indivdual named %s birth date of %s is a duplicate.'% (str(individual.name),str(individual.birthday))
+            unique_data=False
+            
+    return (unique_data) # if either case is false return false
