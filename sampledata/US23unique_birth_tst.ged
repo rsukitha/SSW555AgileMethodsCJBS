@@ -1,0 +1,29 @@
+0 NOTE Chris Corrado
+0 HEAD
+1 SOUR Family Echo
+2 WWW http://www.familyecho.com/
+1 FILE My Family
+1 DATE 23 JAN 2018
+1 DEST ANSTFILE
+1 GEDC
+2 VERS 5.5.1
+2 FORM LINEAGE-LINKED
+
+0 @I12@ INDI
+1 NAME Betty /Fudd/
+2 GIVN Betty
+2 SURN Fudd
+2 _MARNM Fudd
+1 SEX F
+1 BIRT
+2 DATE 3 FEB 2018
+1 FAMC @F5@
+0 @I13@ INDI
+1 NAME Elsie /Fudd/
+2 GIVN Elsie
+2 SURN Fudd
+2 _MARNM Fudd
+1 SEX F
+1 BIRT
+2 DATE 3 FEB 2018
+1 FAMC @F5@0 TRLR
