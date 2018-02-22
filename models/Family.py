@@ -12,3 +12,19 @@ class Family:
         self.husband_name = "NA"
         self.wife_name = "NA"
         self.divorced = "NA"
+
+    def validate_children(self, individuals):
+        """
+        U.S. 25 Validates whether a Child with the same name and birthday exists in the family.
+        """
+        child_name_bday_dict = {}
+        duplicates = []
+        for child_id in self.children:
+            if child_id in individuals:
+                child = individuals[child_id]
+                if child.name in child_name_bday_dict and child_name_bday_dict[child.name] == child.birthday:
+                    duplicates.append(child)
+                    print("ERROR: FAMILY: US25: {}: Child with name: {} and birthday {} already exists".format(
+                        self.id, child.name, child.birthday))
+                child_name_bday_dict[child.name] = child.birthday
+        return duplicates == []

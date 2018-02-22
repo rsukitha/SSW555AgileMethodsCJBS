@@ -2,6 +2,7 @@
 Class to represent an Individual based on GEDCOM Data
 """
 import datetime
+from models.Family import Family
 
 
 class Individual:
@@ -13,6 +14,7 @@ class Individual:
         self.spouse = {}
         self.age = ""
         self.birthday = ""
+        self.gender = ""
         self.alive = True
         self.death = "NA"
 
@@ -50,8 +52,39 @@ class Individual:
         :return: Integer representation of Age
         """
         birthday = datetime.datetime.strptime(self.birthday, '%d %b %Y')
+        today = datetime.datetime.now()
         if self.death != "NA":
             death_date = datetime.datetime.strptime(self.death, '%d %b %Y')
-            return int(abs(death_date.year)) - int(abs(birthday.year))
-        today = datetime.datetime.now()
+            if death_date <= today:
+                return int(abs(death_date.year)) - int(abs(birthday.year))
         return int(abs(today.year)) - int(abs(birthday.year))
+
+    def validate_role(self, role):
+        """
+        Method to validate gender to role for an individual.
+
+        :param role: "WIFE" or "HUSB"
+        :return: True if gender is valid for role.
+        """
+        if self.gender == "M" and role == "HUSB":
+            return True
+        if self.gender == "F" and role == "WIFE":
+            return True
+        print(
+            "ERROR: INDIVIDUAL: US21: {}: Spouse with gender: {} and role {} do not match".format(self.id, self.gender,
+                                                                                                  role))
+        return False
+
+
+
+    def validate_marriage(indivi_birthday):
+        """
+        verify if marriage age is valid
+
+        """
+        if Individual.id == Family.wife_id or Individual.id == Family.husband_id:
+            if Individual.calculate_age(indivi_birthday) >= 14:
+                return (True)
+
+            else:
+                return (False)
