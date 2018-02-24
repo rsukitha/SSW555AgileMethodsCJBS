@@ -1,8 +1,10 @@
 """
 Top Level class to execute GEDCOM parsing and manipulation for later storage.
 """
-import prettytable
 import collections
+import datetime
+
+import prettytable
 
 from models.Family import Family
 from models.Individual import Individual
@@ -158,34 +160,36 @@ def print_family_data(family_dict, individual_data):
     print("Families")
     print(table.get_string())
 
+
 def unique_name_b_date(ind_dict):
     """
     Determines if individuals have unique names and birth dates"
     :param: ind_dict -- Individual dictionary containing all unique individuals
     :return: True if individuals names and birth dates are unique or False otherwise and return error string.
     """
-    name_list=[]
-    birth_list=[]
-    unique_data=True
-        
-    for indi_id, individual in (ind_dict.items()):
-            name_list.append(individual.name)
-            birth_list.append(individual.birthday)
-    y=collections.Counter(name_list) #the collection of names with number of occurences is
-    x=[i for i in y if y[i]>1] # the duplicate names list
+    indi_name_bday_dict = {}
+    duplicates = []
+    for indi_id in ind_dict:
+        if indi_id in ind_dict:
+            indi = ind_dict[indi_id]
+            if indi.name in indi_name_bday_dict and indi_name_bday_dict[indi.name] == indi.birthday:
+                duplicates.append(indi)
+                print("ERROR: INDIVIDUAL: US23: {}: Individual with name: {} and birthday {} already exists".format(
+                    indi.id, indi.name, indi.birthday))
+            indi_name_bday_dict[indi.name] = indi.birthday
+    # return whether or not any duplicates existed in the data set.
+    return duplicates == []
 
-    v=collections.Counter(birth_list) #the collection of birthdays
-    w=[i for i in v if v[i]>1]  # the duplicate bithday list 
 
-    
-    for indi_id, individual in (ind_dict.items()):
-        if  individual.name in x:       # store the ids of individuals with same name
-            print 'ERROR: INDIVIDUAL: US23: Individual %s named %s is a duplicate.' % (str(individual.id),str(individual.name))
-            unique_data=False
-            
-            
-        if individual.birthday in w:    # store the ids of idividuals with the same birthday
-            print 'ERROR: INDIVIDUAL: US23: Indivdual named %s birth date of %s is a duplicate.'% (str(individual.name),str(individual.birthday))
-            unique_data=False
-            
-    return (unique_data) # if either case is false return false
+def find_upcoming_birthdays(individual_dict, today=datetime.datetime.now()):
+    """
+    Find any upcoming birthdays for all individuals
+    :param individual_dict: Dictionary of all Individuals
+    :param today: The date time to search birthdays for (today is default)
+    """
+    birthdays = []
+    for individual_id, individual in sorted(individual_dict.items()):
+        if individual.upcoming_birthday(today=today):
+            birthdays.append(individual.upcoming_birthday(today=today))
+    for individual in birthdays:
+        print("NOTICE: INDIVIDUAL: US38: {}: Upcoming Birthday on {}".format(individual.id, individual.birthday))
