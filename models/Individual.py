@@ -2,6 +2,7 @@
 Class to represent an Individual based on GEDCOM Data
 """
 import datetime
+
 from models.Family import Family
 
 
@@ -43,6 +44,20 @@ class Individual:
         today_minus_years = datetime.datetime(year=year_sub)
         return birthday.year > today_minus_years.year
 
+    def upcoming_birthday(self, today=datetime.datetime.now()):
+        """
+        Prints whether this user's birthday is upcoming
+        :return: True if birthday is upcoming
+        """
+        current_year_bday_str = datetime.datetime.strptime(self.birthday, '%d %b %Y').strftime(
+            "%m %d") + " " + str(today.year)
+        current_year_bday = datetime.datetime.strptime(current_year_bday_str, '%m %d %Y')
+        delta_from_birthday = current_year_bday - today
+        if 0 <= delta_from_birthday.days <= 30:
+            return self
+        else:
+            return False
+
     def calculate_age(self):
         """
         Calculate Age Based on Birthday
@@ -75,16 +90,9 @@ class Individual:
                                                                                                   role))
         return False
 
-
-
-    def validate_marriage(indivi_birthday):
+    def validate_marriage(self):
         """
         verify if marriage age is valid
-
         """
         if Individual.id == Family.wife_id or Individual.id == Family.husband_id:
-            if Individual.calculate_age(indivi_birthday) >= 14:
-                return (True)
-
-            else:
-                return (False)
+            return self.calculate_age() >= 14

@@ -1,6 +1,9 @@
 """
 Top Level class to execute GEDCOM parsing and manipulation for later storage.
 """
+import collections
+import datetime
+
 import prettytable
 
 from models.Family import Family
@@ -214,3 +217,37 @@ def print_family_data(family_dict, individual_data):
                        wife_name, family.children])
     print("Families")
     print(table.get_string())
+
+
+def unique_name_b_date(ind_dict):
+    """
+    Determines if individuals have unique names and birth dates"
+    :param: ind_dict -- Individual dictionary containing all unique individuals
+    :return: True if individuals names and birth dates are unique or False otherwise and return error string.
+    """
+    indi_name_bday_dict = {}
+    duplicates = []
+    for indi_id in ind_dict:
+        if indi_id in ind_dict:
+            indi = ind_dict[indi_id]
+            if indi.name in indi_name_bday_dict and indi_name_bday_dict[indi.name] == indi.birthday:
+                duplicates.append(indi)
+                print("ERROR: INDIVIDUAL: US23: {}: Individual with name: {} and birthday {} already exists".format(
+                    indi.id, indi.name, indi.birthday))
+            indi_name_bday_dict[indi.name] = indi.birthday
+    # return whether or not any duplicates existed in the data set.
+    return duplicates == []
+
+
+def find_upcoming_birthdays(individual_dict, today=datetime.datetime.now()):
+    """
+    Find any upcoming birthdays for all individuals
+    :param individual_dict: Dictionary of all Individuals
+    :param today: The date time to search birthdays for (today is default)
+    """
+    birthdays = []
+    for individual_id, individual in sorted(individual_dict.items()):
+        if individual.upcoming_birthday(today=today):
+            birthdays.append(individual.upcoming_birthday(today=today))
+    for individual in birthdays:
+        print("NOTICE: INDIVIDUAL: US38: {}: Upcoming Birthday on {}".format(individual.id, individual.birthday))
