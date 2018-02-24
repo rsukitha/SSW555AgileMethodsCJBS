@@ -14,7 +14,7 @@ class GenderForRoleTests(unittest.TestCase):
         This is a sanity check on the integration with some sample data.
         Verify that Cheryl is F and Jimmy is M.
         """
-        gedcom_data = parse_gedcom_file("./sampledata/us21testdata.ged")
+        gedcom_data = parse_gedcom_file("../sampledata/us21testdata.ged")
         for family in gedcom_data[0]:
             wife = gedcom_data[1].get(gedcom_data[0].get(family).wife_id)
             self.assertTrue(wife.validate_role("WIFE"))
