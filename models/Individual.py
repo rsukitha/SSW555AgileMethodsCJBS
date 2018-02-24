@@ -41,7 +41,7 @@ class Individual:
         birthday = datetime.date(year, month, day)
         today = datetime.datetime.now()
         year_sub = today.year - 150
-        today_minus_years = datetime.datetime(year=year_sub)
+        today_minus_years = datetime.datetime(year=year_sub, day=day, month=month)
         return birthday.year > today_minus_years.year
 
     def upcoming_birthday(self, today=datetime.datetime.now()):
