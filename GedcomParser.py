@@ -1,7 +1,6 @@
 """
 Top Level class to execute GEDCOM parsing and manipulation for later storage.
 """
-import collections
 import datetime
 
 import prettytable
@@ -193,3 +192,5 @@ def find_upcoming_birthdays(individual_dict, today=datetime.datetime.now()):
             birthdays.append(individual.upcoming_birthday(today=today))
     for individual in birthdays:
         print("NOTICE: INDIVIDUAL: US38: {}: Upcoming Birthday on {}".format(individual.id, individual.birthday))
+
+    return birthdays != []
