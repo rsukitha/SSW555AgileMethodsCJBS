@@ -1,16 +1,17 @@
 """
 Top Level class to execute GEDCOM parsing and manipulation for later storage.
 """
+
+import calendar
 import datetime
 
 import prettytable
 
 from models.Family import Family
 from models.Individual import Individual
-import datetime
-import calendar
 
 month = {name: num for num, name in enumerate(calendar.month_abbr) if num}
+
 
 def parse_gedcom_file(file_path):
     """
@@ -86,15 +87,16 @@ def parse_valid_results(results):
         elif result[1] == 'BIRT':
             indi = individuals.get(current_indi_id)
             date = next(results_iter)
-            validate_dates(date, indi)
             indi.birthday = date[3]
+            indi.validate_birthday()
+            indi.verify_date_not_future(indi.id, indi.birthday, "INDIVIDUAL BIRTHDAY")
             indi.set_age()
         elif result[1] == 'DEAT':
             indi = individuals.get(current_indi_id)
             date = next(results_iter)
-            validate_dates(date, indi)
             indi.death = date[3]
             indi.alive = False
+            indi.verify_date_not_future(indi.id, indi.death, "INDIVIDUAL DEATH")
             indi.set_age()
         elif result[1] == 'FAMC':
             individuals.get(current_indi_id).child[result[3]] = result[3]
@@ -109,66 +111,15 @@ def parse_valid_results(results):
         elif result[1] == 'MARR':
             fam = families.get(current_fam_id)
             date = next(results_iter)
-            validate_dates(date, current_fam_id)
-            validate_marriage_date(indi.birthday, date, indi)
             fam.married = date[3]
+            fam.verify_date_not_future(current_fam_id, fam.married, "FAMILY MARRIAGE")
         elif result[1] == 'DIV':
             fam = families.get(current_fam_id)
             date = next(results_iter)
-            validate_dates(date, fam)
             fam.divorced = date[3]
+            fam.verify_date_not_future(current_fam_id, fam.divorced, "FAMILY DIVORCE")
     return families, individuals
 
-
-
-def get_date(date):
-      """
-      Method to get the date from input and convert it to Date format
-      :param date -- Input line tuple in format (level, tag, valid, arg)      
-      """      
-      split_date = date[3].split(" ")
-      given_year = int(split_date[2])
-      given_month = month[split_date[1].capitalize()]
-      given_day = int(split_date[0])
-      given_date = datetime.date(given_year, given_month, given_day)
-      
-      return given_date
-      
-      
-def validate_dates(date, current_indi_id):
-      """
-      Method to validate if the birth, death, marriage, divorce dates are before today
-      :param date -- Input line tuple in format (level, tag, valid, arg) 
-      :param current_indi_id -- Individual object
-      """   
-      today = datetime.date.today()
-      given_date = get_date(date)
-
-      if given_date > today:
-            print("Invalid! Birth, Marriage, Divorce or Death dates should not be after today. User ID is: ", current_indi_id.id, " and today is: ", today)            
-      else:
-            pass
-
-def validate_marriage_date(birth, marriage, current_fam_id):
-      """
-      Method to validate if the person is born before his/her marriage
-      :param birth -- Birthdate of the person
-      :param marriage -- Input line tuple in format (level, tag, valid, arg) 
-      :param current_fam_id -- Family object
-      """
-      
-      birth = birth.split(" ")
-      birth_year = int(birth[2])
-      birth_month = month[birth[1].capitalize()]
-      birth_day = int(birth[0])
-      birth_date = datetime.date(birth_year, birth_month, birth_day)
-      
-      marriage_date = get_date(marriage)
-
-      if marriage_date < birth_date:
-            print("Invalid! Birth should occur before marriage for user: ", current_fam_id.id)
-      else:
-            pass  
 
 def print_individuals_data(individual_dict):
     """
