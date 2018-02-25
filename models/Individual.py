@@ -25,6 +25,14 @@ class Individual(Member):
                 "ERROR: INDIVIDUAL: US07: {}: Individual Birthday {} over 150 years ago.".format(self.id,
                                                                                                  self.birthday))
 
+
+    def validate_death(self):
+        if not self.verify_date_150_years(self.birthday):
+            print(
+                "ERROR: INDIVIDUAL: US07: {}: Individual Death {} over 150 years ago.".format(self.id,
+                                                                                                 self.birthday))
+
+
     def set_age(self):
         self.age = self.calculate_age()
 
