@@ -22,7 +22,7 @@ class Individual(Member):
     def validate_birthday(self):
         if not self.verify_date_150_years(self.birthday):
             print(
-                "ERROR: INDIVIDUAL: US10: {}: Individual Birthday {} over 150 years ago.".format(self.id,
+                "ERROR: INDIVIDUAL: US07: {}: Individual Birthday {} over 150 years ago.".format(self.id,
                                                                                                  self.birthday))
 
     def set_age(self):
