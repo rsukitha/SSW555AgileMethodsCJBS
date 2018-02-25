@@ -1,12 +1,16 @@
 """
 Top Level class to execute GEDCOM parsing and manipulation for later storage.
 """
+
+import calendar
 import datetime
 
 import prettytable
 
 from models.Family import Family
 from models.Individual import Individual
+
+month = {name: num for num, name in enumerate(calendar.month_abbr) if num}
 
 
 def parse_gedcom_file(file_path):
@@ -27,8 +31,6 @@ def parse_gedcom_file(file_path):
                 result = validate_tag_line(line)
                 if result[2] == 'Y':
                     valid_results.append(result)
-
-                    # print('<-- {}|{}|{}|{}\n'.format(result[0], result[1], result[2], result[3]))
             return parse_valid_results(valid_results)
 
 
@@ -84,6 +86,7 @@ def parse_valid_results(results):
             indi = individuals.get(current_indi_id)
             date = next(results_iter)
             indi.birthday = date[3]
+            indi.validate_birthday()
             indi.set_age()
         elif result[1] == 'DEAT':
             indi = individuals.get(current_indi_id)
@@ -112,10 +115,11 @@ def parse_valid_results(results):
     return families, individuals
 
 
-def print_individuals_data(individual_dict):
+def print_individuals_data(individual_dict, run_validations):
     """
     Method to print and build a table of the Individuals from a GEDCOM file.
     :param individual_dict -- Dictionary containing all Individuals. Key == ID of Individual
+    :param run_validations -- boolean whether or not validations should run
     """
     table = prettytable.PrettyTable()
     table.field_names = ('ID', 'Name', 'Gender', 'Birthday', 'Age', 'Alive', 'Death', 'Child', 'Spouse')
@@ -125,13 +129,16 @@ def print_individuals_data(individual_dict):
              individual.death, individual.child, individual.spouse])
     print("Individuals")
     print(table.get_string())
+    if run_validations:
+        validate_individuals(individual_dict)
 
 
-def print_family_data(family_dict, individual_data):
+def print_family_data(family_dict, individual_data, run_validations):
     """
     Method to print and build a table of the Families from a GEDCOM file.
     :param family_dict -- Dictionary containing all families. Key == ID of family
     :param individual_data -- Dictionary containing all Individuals. Key == ID of Individual
+    :param run_validations -- boolean whether or not validations should run
     """
     table = prettytable.PrettyTable()
     table.field_names = ('ID', 'Married', 'Divorced', 'Husband ID', 'Husband Name', 'Wife ID', 'Wife Name', 'Children')
@@ -140,29 +147,55 @@ def print_family_data(family_dict, individual_data):
         husband_name = ""
         try:
             wife = individual_data[family.wife_id]
-            if wife.validate_role("WIFE"):
-                wife_name = wife.name
+            wife_name = wife.name
         except KeyError:
             print("No Wife with ID: ", family.wife_id)
 
         try:
             husband = individual_data[family.husband_id]
-            if husband.validate_role("HUSB"):
-                husband_name = husband.name
+            husband_name = husband.name
         except KeyError:
             print("No Husband with ID: ", family.husband_id)
-
-        family.validate_children(individual_data)
 
         table.add_row([family.id, family.married, family.divorced, family.husband_id, husband_name, family.wife_id,
                        wife_name, family.children])
     print("Families")
     print(table.get_string())
+    if run_validations:
+        validate_families(family_dict, individual_data)
+
+
+def validate_individuals(individual_dict):
+    """
+    Method to validate Individuals and print any errors.
+    :param individual_dict -- Dictionary containing all Individuals. Key == ID of Individual
+    """
+    find_upcoming_birthdays(individual_dict)
+    for indi_id, individual in sorted(individual_dict.items()):
+        individual.verify_date_not_future(individual.id, individual.birthday, "INDIVIDUAL BIRTHDAY")
+        individual.verify_date_not_future(individual.id, individual.death, "INDIVIDUAL DEATH")
+        individual.validate_birthday()
+
+
+def validate_families(family_dict, individual_data):
+    """
+    Method to validate Families and print any errors.
+    :param family_dict -- Dictionary containing all families. Key == ID of family
+    :param individual_data -- Dictionary containing all Individuals. Key == ID of Individual
+    """
+    for fam_id, family in sorted(family_dict.items()):
+        family.validate_children(individual_data)
+        family.marriage_before_14(individual_data)
+        family.birth_before_marriage(individual_data)
+        family.verify_date_not_future(fam_id, family.married, "FAMILY MARRIAGE")
+        family.verify_date_not_future(fam_id, family.divorced, "FAMILY DIVORCE")
+        family.validate_wife_role(individual_data)
+        family.validate_husb_role(individual_data)
 
 
 def unique_name_b_date(ind_dict):
     """
-    Determines if individuals have unique names and birth dates"
+    Determines if individuals have unique names and birth dates
     :param: ind_dict -- Individual dictionary containing all unique individuals
     :return: True if individuals names and birth dates are unique or False otherwise and return error string.
     """
