@@ -12,7 +12,7 @@ class IndividualFamilyDateTests(unittest.TestCase):
         """
         Validate Dates are not before current date.
         """
-        gedcom_data = parse_gedcom_file("../sampledata/ccorradop02test.ged")
+        gedcom_data = parse_gedcom_file("./sampledata/ccorradop02test.ged")
         families = gedcom_data[0]
         dates = []
         for fam_id in families:
@@ -26,7 +26,7 @@ class IndividualFamilyDateTests(unittest.TestCase):
         """
         Validate Dates are not before current date.
         """
-        gedcom_data = parse_gedcom_file("../sampledata/ccorradop02test.ged")
+        gedcom_data = parse_gedcom_file("./sampledata/ccorradop02test.ged")
         families = gedcom_data[0]
         dates = []
         for fam_id in families:
@@ -40,7 +40,7 @@ class IndividualFamilyDateTests(unittest.TestCase):
         """
         Validate Dates are not before current date.
         """
-        gedcom_data = parse_gedcom_file("../sampledata/ccorradop02test.ged")
+        gedcom_data = parse_gedcom_file("./sampledata/ccorradop02test.ged")
         individuals = gedcom_data[1]
         dates = []
         for indi_id in individuals:
@@ -55,7 +55,7 @@ class IndividualFamilyDateTests(unittest.TestCase):
         """
         Validate Dates are not before current date.
         """
-        gedcom_data = parse_gedcom_file("../sampledata/US01futuredatestests.ged")
+        gedcom_data = parse_gedcom_file("./sampledata/US01futuredatestests.ged")
         families = gedcom_data[0]
         dates = []
         for fam_id in families:
@@ -69,7 +69,7 @@ class IndividualFamilyDateTests(unittest.TestCase):
         """
         Validate Dates are not before current date.
         """
-        gedcom_data = parse_gedcom_file("../sampledata/US01futuredatestests.ged")
+        gedcom_data = parse_gedcom_file("./sampledata/US01futuredatestests.ged")
         families = gedcom_data[0]
         dates = []
         for fam_id in families:
@@ -83,7 +83,7 @@ class IndividualFamilyDateTests(unittest.TestCase):
         """
         Validate Dates are not before current date.
         """
-        gedcom_data = parse_gedcom_file("../sampledata/US01futuredatestests.ged")
+        gedcom_data = parse_gedcom_file("./sampledata/US01futuredatestests.ged")
         individuals = gedcom_data[1]
         dates = []
         for indi_id in individuals:
@@ -98,7 +98,7 @@ class IndividualFamilyDateTests(unittest.TestCase):
         """
         Validate Dates are not before current date.
         """
-        gedcom_data = parse_gedcom_file("../sampledata/proj02test.ged")
+        gedcom_data = parse_gedcom_file("./sampledata/proj02test.ged")
         individuals = gedcom_data[1]
         dates = []
         for indi_id in individuals:
@@ -113,7 +113,7 @@ class IndividualFamilyDateTests(unittest.TestCase):
         """
         Validate Birthday does not occur before Marriage
         """
-        gedcom_data = parse_gedcom_file("../sampledata/ccorradop02test.ged")
+        gedcom_data = parse_gedcom_file("./sampledata/ccorradop02test.ged")
         families = gedcom_data[0]
         individuals = gedcom_data[1]
         results = []
@@ -128,7 +128,7 @@ class IndividualFamilyDateTests(unittest.TestCase):
         """
         Validate Birthday does not occur before Marriage
         """
-        gedcom_data = parse_gedcom_file("../sampledata/US01futuredatestests.ged")
+        gedcom_data = parse_gedcom_file("./sampledata/US01futuredatestests.ged")
         families = gedcom_data[0]
         individuals = gedcom_data[1]
         results = []
@@ -138,3 +138,7 @@ class IndividualFamilyDateTests(unittest.TestCase):
             if not result:
                 results.append(result)
         self.assertFalse(results == [])
+
+
+if __name__ == "__main__":
+    unittest.main()

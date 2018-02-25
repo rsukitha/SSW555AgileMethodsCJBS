@@ -12,7 +12,7 @@ class UniqueNameBirthDateTests(unittest.TestCase):
         """
         Validate that if a family contains an invalid id, regardless of where you are in the script, false is returned
         """
-        gedcom_data = parse_gedcom_file("../sampledata/us25testdata.ged")
+        gedcom_data = parse_gedcom_file("./sampledata/us25testdata.ged")
         for family in gedcom_data[0]:
             children_ids = gedcom_data[0].get(family).children
             for id in children_ids:
@@ -25,7 +25,7 @@ class UniqueNameBirthDateTests(unittest.TestCase):
         """
         Validate that if a family contains an invalid id, regardless of where you are in the script, false is returned
         """
-        gedcom_data = parse_gedcom_file("../sampledata/us25testdata.ged")
+        gedcom_data = parse_gedcom_file("./sampledata/us25testdata.ged")
         for family in gedcom_data[0]:
             children_ids = gedcom_data[0].get(family).children
             for id in children_ids:
@@ -38,7 +38,7 @@ class UniqueNameBirthDateTests(unittest.TestCase):
         """
         Validate that if a family contains an invalid id, regardless of where you are in the script, false is returned
         """
-        gedcom_data = parse_gedcom_file("../sampledata/us25testdata.ged")
+        gedcom_data = parse_gedcom_file("./sampledata/us25testdata.ged")
         for family in gedcom_data[0]:
             children_ids = gedcom_data[0].get(family).children
             for id in children_ids:
@@ -51,7 +51,7 @@ class UniqueNameBirthDateTests(unittest.TestCase):
         """
         Validate that if a family contains an invalid id, regardless of where you are in the script, false is returned
         """
-        gedcom_data = parse_gedcom_file("../sampledata/us25testdata.ged")
+        gedcom_data = parse_gedcom_file("./sampledata/us25testdata.ged")
         for family in gedcom_data[0]:
             children_ids = gedcom_data[0].get(family).children
             for id in children_ids:
@@ -64,7 +64,7 @@ class UniqueNameBirthDateTests(unittest.TestCase):
         """
         Validate that if a family contains an invalid id, regardless of where you are in the script, false is returned
         """
-        gedcom_data = parse_gedcom_file("../sampledata/us25testdata.ged")
+        gedcom_data = parse_gedcom_file("./sampledata/us25testdata.ged")
         individuals = gedcom_data[1]
         # Assert that this file contains duplicate individuals
         self.assertFalse(unique_name_b_date(individuals))
@@ -73,7 +73,7 @@ class UniqueNameBirthDateTests(unittest.TestCase):
         """
         Validate that if a family contains an invalid id, regardless of where you are in the script, false is returned
         """
-        gedcom_data = parse_gedcom_file("../sampledata/ccorradop02test.ged")
+        gedcom_data = parse_gedcom_file("./sampledata/ccorradop02test.ged")
         individuals = gedcom_data[1]
         # Assert that this file contains duplicate individuals
         self.assertTrue(unique_name_b_date(individuals))
