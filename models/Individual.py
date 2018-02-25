@@ -3,7 +3,6 @@ Class to represent an Individual based on GEDCOM Data
 """
 import datetime
 
-from models.Family import Family
 from models.Member import Member
 
 
@@ -55,26 +54,3 @@ class Individual(Member):
             if death_date <= today:
                 return int(abs(death_date.year)) - int(abs(birthday.year))
         return int(abs(today.year)) - int(abs(birthday.year))
-
-    def validate_role(self, role):
-        """
-        Method to validate gender to role for an individual.
-
-        :param role: "WIFE" or "HUSB"
-        :return: True if gender is valid for role.
-        """
-        if self.gender == "M" and role == "HUSB":
-            return True
-        if self.gender == "F" and role == "WIFE":
-            return True
-        print(
-            "ERROR: INDIVIDUAL: US21: {}: Spouse with gender: {} and role {} do not match".format(self.id, self.gender,
-                                                                                                  role))
-        return False
-
-    def validate_marriage(self):
-        """
-        verify if marriage age is valid
-        """
-        if Individual.id == Family.wife_id or Individual.id == Family.husband_id:
-            return self.calculate_age() >= 14

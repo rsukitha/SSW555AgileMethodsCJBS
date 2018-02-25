@@ -5,12 +5,16 @@ class Member:
 
     @staticmethod
     def verify_date_not_future(obj_id, date, member_type):
+        if date == "NA":
+            return False
         today = datetime.datetime.today()
         formatted_date = datetime.datetime.strptime(date, '%d %b %Y')
         if formatted_date > today:
             print(
                 "ERROR: {}: US01: {}: {} is in the future from {}".format(
                     member_type, obj_id, formatted_date.strftime("%m %d %Y"), today.strftime("%m %d %Y")))
+            return formatted_date
+        return False
 
     @staticmethod
     def verify_date_150_years(date):

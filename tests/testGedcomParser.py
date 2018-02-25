@@ -11,14 +11,14 @@ class GedcomParseTest(unittest.TestCase):
     def test_parser(self):
         proj2_test_data = parse_gedcom_file("../sampledata/proj02test.ged")
         self.assertTrue(proj2_test_data != [])
-        print_individuals_data(proj2_test_data[1])
-        print_family_data(proj2_test_data[0], proj2_test_data[1])
+        print_individuals_data(proj2_test_data[1], False)
+        print_family_data(proj2_test_data[0], proj2_test_data[1], False)
 
     def test_larger_dataset_parser(self):
         other_test_data = parse_gedcom_file("../sampledata/ccorradop02test.ged")
         self.assertTrue(other_test_data != [])
-        print_individuals_data(other_test_data[1])
-        print_family_data(other_test_data[0], other_test_data[1])
+        print_individuals_data(other_test_data[1], False)
+        print_family_data(other_test_data[0], other_test_data[1], False)
 
     def test_valid_tag(self):
         self.assertEqual(('0', 'FAM', 'Y', 'f2'), validate_tag_line("0 f2 FAM"))  # Assert 0 f2 FAM is valid
