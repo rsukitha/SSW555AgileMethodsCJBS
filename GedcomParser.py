@@ -7,13 +7,15 @@ import datetime
 
 import prettytable
 
+
 from models.Family import Family
 from models.Individual import Individual
 
 month = {name: num for num, name in enumerate(calendar.month_abbr) if num}
 
 
-def parse_gedcom_file(file_path):
+        
+def parse_gedcom_file(ccorradop02test):
     """
     Helper method to parse the file from input.
     """
@@ -70,14 +72,24 @@ def parse_valid_results(results):
     individuals = {}
     current_fam_id = ""
     current_indi_id = ""
+    duplicate_fam=[]
+    duplicate_ind=[]
     results_iter = iter(results)
     for result in results_iter:
         if result[1] == 'FAM':
-            families[result[3]] = Family(result[3])
-            current_fam_id = result[3]
+            if result[3] in families.keys():                            
+                dup_fam_str ='ERROR: FAMILY: US22: Family ID {} is a duplicate.'.format(result[3])
+                duplicate_fam.append(dup_fam_str)
+            else:
+                families[result[3]] = Family(result[3])
+                current_fam_id = result[3]
         elif result[1] == 'INDI':
-            individuals[result[3]] = Individual(result[3])
-            current_indi_id = result[3]
+            if result[3] in individuals.keys():     
+               dup_ind_str= 'ERROR: INDIVIDUAL: US22: Individual ID {} is a duplicate.' .format(result[3])
+               duplicate_ind.append(dup_ind_str)
+            else:
+                individuals[result[3]] = Individual(result[3])
+                current_indi_id = result[3]
         elif result[1] == 'NAME':
             individuals.get(current_indi_id).name = result[3]
         elif result[1] == 'SEX':
@@ -112,7 +124,7 @@ def parse_valid_results(results):
             fam = families.get(current_fam_id)
             date = next(results_iter)
             fam.divorced = date[3]
-    return families, individuals
+    return families, individuals, duplicate_fam, duplicate_ind 
 
 
 def print_individuals_data(individual_dict, run_validations):
