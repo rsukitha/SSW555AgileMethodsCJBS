@@ -35,19 +35,31 @@ class Family(Member):
                 child_name_bday_dict[child.name] = child.birthday
         return duplicates == []
 
-    def marriage_before_14(self, individuals):
+    def husband_is_over_14(self, individuals):
         """
-        verify if marriage age is valid
+        verify if husband marriage age is valid
         """
-        for indi_id in individuals:
-            individual = individuals[indi_id]
-            if individual.id == self.wife_id or individual.id == self.husband_id:
-                if individual.calculate_age() < 14:
-                    print("ERROR: INDIVIDUAL: US10: {}: Individual Married on {} before birth on {}".format(
-                        self.id,
-                        self.married,
-                        individual.birthday))
-                return individual.calculate_age() >= 14
+        if self.husband_id in individuals:
+            husband = individuals[self.husband_id]
+            if husband.calculate_age() < 14:
+                print("ERROR: INDIVIDUAL: US10: {}: Husband Married on {} before birth on {}".format(
+                    self.id,
+                    self.married,
+                    husband.birthday))
+            return husband.calculate_age() >= 14
+
+    def wife_is_over_14(self, individuals):
+        """
+        verify if wife marriage age is valid
+        """
+        if self.wife_id in individuals:
+            wife = individuals[self.wife_id]
+            if wife.calculate_age() < 14:
+                print("ERROR: INDIVIDUAL: US10: {}: Wife Married on {} before birth on {}".format(
+                    self.id,
+                    self.married,
+                    wife.birthday))
+            return wife.calculate_age() >= 14
 
     def birth_before_marriage(self, individuals):
         """
@@ -61,11 +73,8 @@ class Family(Member):
                 formatted_birthday = datetime.datetime.strptime(individual.birthday, '%d %b %Y')
                 if formatted_marriage < formatted_birthday:
                     bad_dates.append(formatted_marriage)
-                    print(
-                        "ERROR: INDIVIDUAL: US02: {}: Individual Born before Marriage on {}".format(self.id,
-                                                                                                    formatted_marriage
-                                                                                                    .strftime(
-                                                                                                        "%m %d %Y")))
+                    print("ERROR: INDIVIDUAL: US02: {}: Individual Born {} after Marriage on {}".format(
+                        self.id, formatted_birthday.strftime("%m %d %Y"), formatted_marriage.strftime("%m %d %Y")))
         return bad_dates == []
 
     def validate_wife_role(self, individuals):

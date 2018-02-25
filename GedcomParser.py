@@ -185,12 +185,13 @@ def validate_families(family_dict, individual_data):
     """
     for fam_id, family in sorted(family_dict.items()):
         family.validate_children(individual_data)
-        family.marriage_before_14(individual_data)
         family.birth_before_marriage(individual_data)
         family.verify_date_not_future(fam_id, family.married, "FAMILY MARRIAGE")
         family.verify_date_not_future(fam_id, family.divorced, "FAMILY DIVORCE")
         family.validate_wife_role(individual_data)
         family.validate_husb_role(individual_data)
+        family.wife_is_over_14(individual_data)
+        family.husband_is_over_14(individual_data)
 
 
 def unique_name_b_date(ind_dict):
