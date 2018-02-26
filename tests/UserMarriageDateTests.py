@@ -12,7 +12,7 @@ class UserMarriageDateTests(unittest.TestCase):
         """
         Validate that the husband is at least 14
         """
-        gedcom_data = parse_gedcom_file("../sampledata/us10testdata.ged")
+        gedcom_data = parse_gedcom_file("./sampledata/us10testdata.ged")
         families = gedcom_data[0]
         for fam_id in gedcom_data[0]:
             family = families[fam_id]
@@ -22,7 +22,7 @@ class UserMarriageDateTests(unittest.TestCase):
         """
         Validate that the wife is at least 14
         """
-        gedcom_data = parse_gedcom_file("../sampledata/us10testdata.ged")
+        gedcom_data = parse_gedcom_file("./sampledata/us10testdata.ged")
         families = gedcom_data[0]
         for fam_id in gedcom_data[0]:
             family = families[fam_id]
