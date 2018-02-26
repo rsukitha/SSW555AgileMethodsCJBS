@@ -13,7 +13,7 @@ class GenderForRoleTests(unittest.TestCase):
         This is a sanity check on the integration with some sample data.
         Verify that Cheryl is F and Jimmy is M.
         """
-        gedcom_data = parse_gedcom_file("../sampledata/us21testdata.ged")
+        gedcom_data = parse_gedcom_file("./sampledata/us21testdata.ged")
         families = gedcom_data[0]
         individuals = gedcom_data[1]
         for fam_id in families:
@@ -26,7 +26,7 @@ class GenderForRoleTests(unittest.TestCase):
         This is a sanity check on the integration with some sample data.
         Verify that Cheryl is F and Jimmy is M.
         """
-        gedcom_data = parse_gedcom_file("../sampledata/us21negtestdata.ged")
+        gedcom_data = parse_gedcom_file("./sampledata/US21negtestdata.ged")
         families = gedcom_data[0]
         individuals = gedcom_data[1]
         for fam_id in families:
