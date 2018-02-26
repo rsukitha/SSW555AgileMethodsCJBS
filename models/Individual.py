@@ -17,7 +17,7 @@ class Individual(Member):
         self.birthday = ""
         self.gender = ""
         self.alive = True
-        self.death = "NA"
+        self.death = "NA" 
 
     def validate_birthday(self):
         if not self.verify_date_150_years(self.birthday):
@@ -62,3 +62,12 @@ class Individual(Member):
             if death_date <= today:
                 return int(abs(death_date.year)) - int(abs(birthday.year))
         return int(abs(today.year)) - int(abs(birthday.year))
+  
+    def validate_spouse(self, id):
+          
+          if id in self.child:
+                print("ERROR: INDIVIDUAL: US17: {}: Marriage cannot happen with descendants: {}.".format(self.id,
+                                                                                                 id))
+                return False
+          return True
+
