@@ -1,7 +1,7 @@
 import unittest
 
 
-from GedcomParser import parse_gedcom_file
+from GedcomParser import parse_valid_results
 
 
 class ResultsParseTest(unittest.TestCase):
