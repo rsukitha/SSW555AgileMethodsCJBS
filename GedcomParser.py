@@ -181,6 +181,7 @@ def validate_individuals(individual_dict):
     :param individual_dict -- Dictionary containing all Individuals. Key == ID of Individual
     """
     find_upcoming_birthdays(individual_dict)
+    unique_name_b_date(individual_dict)
     for indi_id, individual in sorted(individual_dict.items()):
         individual.verify_date_not_future(individual.id, individual.birthday, "INDIVIDUAL BIRTHDAY")
         individual.verify_date_not_future(individual.id, individual.death, "INDIVIDUAL DEATH")
