@@ -110,3 +110,40 @@ class Family(Member):
                                                                                                       "HUSB"))
                 return False
             return True
+    
+    def validate_marriage_divorce_date(self, marriage):
+        """
+        Method to validate marriage date and divorce date for an individual.
+
+        :param individuals: marriage date
+        :return: True if marriage occurs before divorce.
+        """
+        marriage_date = datetime.datetime.strptime(marriage, '%d %b %Y')
+        divorce_date = datetime.datetime.strptime(self.divorced, '%d %b %Y')
+        
+        if divorce_date < marriage_date:
+              print("ERROR: INDIVIDUAL: US04: Marriage date: {} should occur before divorce date: {}".format(marriage_date, divorce_date))
+              return False
+        return True
+          
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+            
