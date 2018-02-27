@@ -4,6 +4,7 @@ Top Level class to execute GEDCOM parsing and manipulation for later storage.
 
 import calendar
 import datetime
+import collections
 
 import prettytable
 
@@ -222,6 +223,30 @@ def unique_name_b_date(ind_dict):
             indi_name_bday_dict[indi.name] = indi.birthday
     # return whether or not any duplicates existed in the data set.
     return duplicates == []
+
+def dup_name_birth_date(ind_dict):
+    """
+    US 23 - Determines if individuals have duplicate names and birth dates"
+    :param: ind_dict -- Individual dictionary containing all unique individuals
+    :return: tuple True if duplicates exist
+    """
+    name_list=[]
+    birth_list=[]
+
+    for indi_id, individual in (ind_dict.items()):
+            name_list.append(individual.name)
+            birth_list.append(individual.birthday)
+    y=collections.Counter(name_list)
+    x=[i for i in y if y[i]>1]
+    
+    v=collections.Counter(birth_list)
+    w=[i for i in v if v[i]>1]
+    
+    for indi_id, individual in (ind_dict.items()):
+        if  individual.name in x:
+            print('ERROR: INDIVIDUAL: US23: Name {} is a duplicate.'.format(individual.name))
+        if individual.birthday in w:
+            print("ERROR: INDIVIDUAL: US23: Name {} 's birthday of {} is a duplicate.".format(individual.name,individual.birthday))
 
 
 def find_upcoming_birthdays(individual_dict, today=datetime.datetime.now()):
