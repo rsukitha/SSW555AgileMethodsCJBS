@@ -12,7 +12,7 @@ class MarriageNotWithDescendantsTests(unittest.TestCase):
         """
         Validate if a family member has married their own descendants
         """
-        gedcom_data = parse_gedcom_file("../sampledata/us17testdata.ged")
+        gedcom_data = parse_gedcom_file("./sampledata/us17testdata.ged")
         for individual in gedcom_data[1]:
             spouse_ids = gedcom_data[1].get(individual).spouse            
             for id in spouse_ids:
