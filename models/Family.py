@@ -42,7 +42,7 @@ class Family(Member):
         if self.husband_id in individuals:
             husband = individuals[self.husband_id]
             if husband.calculate_age() < 14:
-                print("ERROR: INDIVIDUAL: US10: {}: Husband Married on {} before birth on {}".format(
+                print("ERROR: FAMILY: US10: {}: Husband Married on {} before birth on {}".format(
                     self.id,
                     self.married,
                     husband.birthday))
@@ -55,7 +55,7 @@ class Family(Member):
         if self.wife_id in individuals:
             wife = individuals[self.wife_id]
             if wife.calculate_age() < 14:
-                print("ERROR: INDIVIDUAL: US10: {}: Wife Married on {} before birth on {}".format(
+                print("ERROR: FAMILY: US10: {}: Wife Married on {} before birth on {}".format(
                     self.id,
                     self.married,
                     wife.birthday))
@@ -73,7 +73,7 @@ class Family(Member):
                 formatted_birthday = datetime.datetime.strptime(individual.birthday, '%d %b %Y')
                 if formatted_marriage < formatted_birthday:
                     bad_dates.append(formatted_marriage)
-                    print("ERROR: INDIVIDUAL: US02: {}: Individual Born {} after Marriage on {}".format(
+                    print("ERROR: FAMILY: US02: {}: Individual Born {} after Marriage on {}".format(
                         self.id, formatted_birthday.strftime("%m %d %Y"), formatted_marriage.strftime("%m %d %Y")))
         return bad_dates == []
 
@@ -88,9 +88,9 @@ class Family(Member):
             wife = individuals[self.wife_id]
             if wife.gender == "M":
                 print(
-                    "ERROR: INDIVIDUAL: US21: {}: Spouse with gender: {} and role {} do not match".format(wife.id,
-                                                                                                          wife.gender,
-                                                                                                          "WIFE"))
+                    "ERROR: FAMILY: US21: {}: Spouse with gender: {} and role {} do not match".format(self.id,
+                                                                                                      wife.gender,
+                                                                                                      "WIFE"))
                 return False
             return True
 
@@ -105,8 +105,8 @@ class Family(Member):
             husband = individuals[self.husband_id]
             if husband.gender == "F":
                 print(
-                    "ERROR: INDIVIDUAL: US21: {}: Spouse with gender: {} and role {} do not match".format(husband.id,
-                                                                                                          husband.gender,
-                                                                                                          "HUSB"))
+                    "ERROR: FAMILY: US21: {}: Spouse with gender: {} and role {} do not match".format(self.id,
+                                                                                                      husband.gender,
+                                                                                                      "HUSB"))
                 return False
             return True

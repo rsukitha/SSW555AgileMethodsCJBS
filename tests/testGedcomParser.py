@@ -15,7 +15,7 @@ class GedcomParseTest(unittest.TestCase):
         print_family_data(proj2_test_data[0], proj2_test_data[1], True)
 
     def test_larger_dataset_parser(self):
-        other_test_data = parse_gedcom_file("./sampledata/ccorradop02test.ged")
+        other_test_data = parse_gedcom_file("./sampledata/basetestdata.ged")
         self.assertTrue(other_test_data != [])
         print_individuals_data(other_test_data[1], False)
         print_family_data(other_test_data[0], other_test_data[1], True)

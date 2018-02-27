@@ -12,7 +12,7 @@ class IndividualFamilyDateTests(unittest.TestCase):
         """
         Validate Dates are not before current date.
         """
-        gedcom_data = parse_gedcom_file("./sampledata/ccorradop02test.ged")
+        gedcom_data = parse_gedcom_file("./sampledata/basetestdata.ged")
         families = gedcom_data[0]
         dates = []
         for fam_id in families:
@@ -26,7 +26,7 @@ class IndividualFamilyDateTests(unittest.TestCase):
         """
         Validate Dates are not before current date.
         """
-        gedcom_data = parse_gedcom_file("./sampledata/ccorradop02test.ged")
+        gedcom_data = parse_gedcom_file("./sampledata/basetestdata.ged")
         families = gedcom_data[0]
         dates = []
         for fam_id in families:
@@ -40,7 +40,7 @@ class IndividualFamilyDateTests(unittest.TestCase):
         """
         Validate Dates are not before current date.
         """
-        gedcom_data = parse_gedcom_file("./sampledata/ccorradop02test.ged")
+        gedcom_data = parse_gedcom_file("./sampledata/basetestdata.ged")
         individuals = gedcom_data[1]
         dates = []
         for indi_id in individuals:
@@ -113,7 +113,7 @@ class IndividualFamilyDateTests(unittest.TestCase):
         """
         Validate Birthday does not occur before Marriage
         """
-        gedcom_data = parse_gedcom_file("./sampledata/ccorradop02test.ged")
+        gedcom_data = parse_gedcom_file("./sampledata/basetestdata.ged")
         families = gedcom_data[0]
         individuals = gedcom_data[1]
         results = []
