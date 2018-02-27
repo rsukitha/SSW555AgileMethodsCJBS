@@ -8,7 +8,7 @@
 1 DEAT
 2 DATE 31 DEC 2099
 1 FAMC f1
-1 FAMS f1
+1 FAMS f2
 0 as INDI
 1 NAME Amanda /Smith/
 1 SEX F
@@ -17,7 +17,7 @@
 1 DEAT
 2 DATE 31 DEC 2099
 1 FAMC f1
-1 FAMS f1
+1 FAMS f2
 0 hs INDI
 1 NAME Herman /Smith/
 1 SEX M
