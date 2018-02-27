@@ -15,7 +15,7 @@ month = {name: num for num, name in enumerate(calendar.month_abbr) if num}
 
 
         
-def parse_gedcom_file(ccorradop02test):
+def parse_gedcom_file(file_path):
     """
     Helper method to parse the file from input.
     """
