@@ -1,0 +1,57 @@
+Individuals
++------------+--------------------+--------+-------------+-----+-------+-------------+------------------+----------------------------------+
+|     ID     |        Name        | Gender |   Birthday  | Age | Alive |    Death    |      Child       |              Spouse              |
++------------+--------------------+--------+-------------+-----+-------+-------------+------------------+----------------------------------+
+|   @I10@    |   Herman /Smith/   |   M    |  2 MAR 2016 |  2  |  True |      NA     | {'@F1@': '@F1@'} |                {}                |
+|   @I11@    |    Dan /Shell/     |   M    |  4 MAY 1992 |  26 |  True |      NA     |        {}        |         {'@F5@': '@F5@'}         |
+|   @I12@    |    Tara /Smith/    |   F    |  3 FEB 2018 |  0  |  True |      NA     | {'@F5@': '@F5@'} |                {}                |
+|    @I1@    |  Chris /Corrado/   |   M    | 21 FEB 1992 |  24 | False |  5 JUN 2016 | {'@F2@': '@F2@'} |         {'@F1@': '@F1@'}         |
+|    @I2@    | Vincent /Corrado/  |   M    | 13 FEB 1955 |  63 |  True |      NA     | {'@F3@': '@F3@'} |         {'@F2@': '@F2@'}         |
+|    @I3@    |  Arlette /Assile/  |   F    | 18 MAR 1954 |  64 |  True |      NA     |        {}        |         {'@F2@': '@F2@'}         |
+|    @I4@    | Michelle /Corrado/ |   F    | 19 AUG 1984 |  34 |  True |      NA     | {'@F2@': '@F2@'} |         {'@F4@': '@F4@'}         |
+|    @I5@    | Autumn /Lucchese/  |   F    | 18 DEC 2016 |  2  |  True |      NA     | {'@F4@': '@F4@'} |                {}                |
+|    @I6@    | Damien /Lucchese/  |   M    | 13 DEC 1984 |  34 |  True |      NA     |        {}        |         {'@F4@': '@F4@'}         |
+|    @I7@    |  Louis /Corrado/   |   M    |  1 JAN 1924 |  56 | False | 11 JUN 1980 |        {}        |         {'@F3@': '@F3@'}         |
+|    @I8@    |   Joan /Corrado/   |   F    |  1 JUN 1925 |  79 | False | 23 DEC 2004 |        {}        |         {'@F3@': '@F3@'}         |
+|    @I9@    |   Shelia /Smith/   |   F    |  9 APR 1991 |  27 |  True |      NA     |        {}        | {'@F1@': '@F1@', '@F5@': '@F5@'} |
+| US01Birth  |  Chris /Corrado/   |   M    | 21 FEB 2100 | -84 | False |  5 JUN 2016 | {'@F2@': '@F2@'} |         {'@F1@': '@F1@'}         |
+| US01Death  |  Chris /Corrado/   |   M    | 21 FEB 1992 |  26 | False |  5 JUN 2100 | {'@F2@': '@F2@'} |         {'@F1@': '@F1@'}         |
+| US07Death  |  Chris /Corrado/   |   M    | 21 FEB 1592 | 423 | False |  5 JUN 2015 |        {}        |                {}                |
+|  US10Husb  | Damien /Lucchese/  |   M    | 13 DEC 2015 |  3  |  True |      NA     |        {}        |      {'US10Fam': 'US10Fam'}      |
+|  US10Wife  | Michelle /Corrado/ |   F    | 19 AUG 2010 |  8  |  True |      NA     | {'@F2@': '@F2@'} |      {'US10Fam': 'US10Fam'}      |
+| US23Unique |   Herman /Smith/   |   M    |  2 MAR 2016 |  2  |  True |      NA     | {'@F1@': '@F1@'} |                {}                |
++------------+--------------------+--------+-------------+-----+-------+-------------+------------------+----------------------------------+
+Families
++----------+-------------+------------+------------+--------------------+----------+--------------------+------------------------------------------------+
+|    ID    |   Married   |  Divorced  | Husband ID |    Husband Name    | Wife ID  |     Wife Name      |                    Children                    |
++----------+-------------+------------+------------+--------------------+----------+--------------------+------------------------------------------------+
+|   @F1@   |  9 MAR 2015 |     NA     |    @I1@    |  Chris /Corrado/   |   @I9@   |   Shelia /Smith/   | {'US23Unique': 'US23Unique', '@I10@': '@I10@'} |
+|   @F2@   | 22 JUN 1980 |     NA     |    @I2@    | Vincent /Corrado/  |   @I3@   |  Arlette /Assile/  |        {'@I1@': '@I1@', '@I4@': '@I4@'}        |
+|   @F3@   | 12 APR 1950 |     NA     |    @I7@    |  Louis /Corrado/   |   @I8@   |   Joan /Corrado/   |                {'@I2@': '@I2@'}                |
+|   @F4@   | 24 OCT 2010 |     NA     |    @I6@    | Damien /Lucchese/  |   @I4@   | Michelle /Corrado/ |                {'@I5@': '@I5@'}                |
+|   @F5@   |  1 JAN 2018 |     NA     |   @I11@    |    Dan /Shell/     |   @I9@   |   Shelia /Smith/   |               {'@I12@': '@I12@'}               |
+| US01DIV  |  9 MAR 2015 | 6 JUN 2100 |    @I1@    |  Chris /Corrado/   |   @I9@   |   Shelia /Smith/   |               {'@I10@': '@I10@'}               |
+| US01Marr |  9 MAR 2100 |     NA     |    @I1@    |  Chris /Corrado/   |   @I9@   |   Shelia /Smith/   |               {'@I10@': '@I10@'}               |
+| US02Marr | 22 JUN 1954 |     NA     |    @I2@    | Vincent /Corrado/  |   @I3@   |  Arlette /Assile/  |        {'@I1@': '@I1@', '@I4@': '@I4@'}        |
+| US10Fam  | 24 OCT 2017 |     NA     |  US10Husb  | Damien /Lucchese/  | US10Wife | Michelle /Corrado/ |                {'@I5@': '@I5@'}                |
+| US21Role | 24 OCT 2010 |     NA     |    @I4@    | Michelle /Corrado/ |   @I6@   | Damien /Lucchese/  |                {'@I5@': '@I5@'}                |
++----------+-------------+------------+------------+--------------------+----------+--------------------+------------------------------------------------+
+ERROR: FAMILY: US25: @F1@: Child with name: Herman /Smith/ and birthday 2 MAR 2016 already exists
+ERROR: FAMILY DIVORCE: US01: US01DIV: 06 06 2100 is in the future from 02 26 2018
+ERROR: FAMILY MARRIAGE: US01: US01Marr: 03 09 2100 is in the future from 02 26 2018
+ERROR: FAMILY: US02: US02Marr: Individual Born 02 13 1955 after Marriage on 06 22 1954
+ERROR: FAMILY: US10: US10Fam: Wife Married on 24 OCT 2017 before birth on 19 AUG 2010
+ERROR: FAMILY: US10: US10Fam: Husband Married on 24 OCT 2017 before birth on 13 DEC 2015
+ERROR: FAMILY: US21: US21Role: Spouse with gender: M and role WIFE do not match
+ERROR: FAMILY: US21: US21Role: Spouse with gender: F and role HUSB do not match
+NOTICE: INDIVIDUAL: US38: @I10@: Upcoming Birthday on 2 MAR 2016
+NOTICE: INDIVIDUAL: US38: @I3@: Upcoming Birthday on 18 MAR 1954
+NOTICE: INDIVIDUAL: US38: US23Unique: Upcoming Birthday on 2 MAR 2016
+ERROR: INDIVIDUAL BIRTHDAY: US01: US01Birth: 02 21 2100 is in the future from 02 26 2018
+ERROR: INDIVIDUAL DEATH: US01: US01Death: 06 05 2100 is in the future from 02 26 2018
+ERROR: INDIVIDUAL: US07: US07Death: Individual Birthday 21 FEB 1592 over 150 years ago.
+ERROR: FAMILY: US22: Family ID @F3@ is a duplicate.
+
+ERROR: INDIVIDUAL: US22: Individual ID @I10@ is a duplicate.
+
+~~~~~~~~~~~~~~~~SPRINT 1 TEST END~~~~~~~~~~~~~~~~

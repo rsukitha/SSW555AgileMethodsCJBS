@@ -73,7 +73,7 @@ class UniqueNameBirthDateTests(unittest.TestCase):
         """
         Validate that if a family contains an invalid id, regardless of where you are in the script, false is returned
         """
-        gedcom_data = parse_gedcom_file("./sampledata/ccorradop02test.ged")
+        gedcom_data = parse_gedcom_file("./sampledata/basetestdata.ged")
         individuals = gedcom_data[1]
         # Assert that this file contains duplicate individuals
         self.assertTrue(unique_name_b_date(individuals))
