@@ -18,6 +18,14 @@ class Sprint1OutputTests(unittest.TestCase):
 
         validate_families(sprint1_data[0], sprint1_data[1])
         validate_individuals(sprint1_data[1])
+        if len(sprint1_data) <= 3:
+            for error in sprint1_data[2]:
+                print(error + "\n")
+        if len(sprint1_data) <= 4:
+            for error in sprint1_data[2]:
+                print(error + "\n")
+            for error in sprint1_data[3]:
+                print(error + "\n")
         print("~~~~~~~~~~~~~~~~SPRINT 1 TEST END~~~~~~~~~~~~~~~~")
 
 

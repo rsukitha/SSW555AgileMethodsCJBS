@@ -1,4 +1,3 @@
-~~~~~~~~~~~~~~~~SPRINT 1 TEST BEGIN~~~~~~~~~~~~~~~~
 Individuals
 +------------+--------------------+--------+-------------+-----+-------+-------------+------------------+----------------------------------+
 |     ID     |        Name        | Gender |   Birthday  | Age | Alive |    Death    |      Child       |              Spouse              |
@@ -51,4 +50,8 @@ NOTICE: INDIVIDUAL: US38: US23Unique: Upcoming Birthday on 2 MAR 2016
 ERROR: INDIVIDUAL BIRTHDAY: US01: US01Birth: 02 21 2100 is in the future from 02 26 2018
 ERROR: INDIVIDUAL DEATH: US01: US01Death: 06 05 2100 is in the future from 02 26 2018
 ERROR: INDIVIDUAL: US07: US07Death: Individual Birthday 21 FEB 1592 over 150 years ago.
+ERROR: FAMILY: US22: Family ID @F3@ is a duplicate.
+
+ERROR: INDIVIDUAL: US22: Individual ID @I10@ is a duplicate.
+
 ~~~~~~~~~~~~~~~~SPRINT 1 TEST END~~~~~~~~~~~~~~~~
