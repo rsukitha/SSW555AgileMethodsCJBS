@@ -1,6 +1,5 @@
 # SSW 555 Agile Methods in Software Engineering
-
-This is our Group Repository containing our GEDCOM Parser for the semester.
+[![Build Status](https://travis-ci.org/jj1976/SSW555AgileMethodsCJBS.svg?branch=master)](https://travis-ci.org/jj1976/SSW555AgileMethodsCJBS)
 
 ## Project Structure
 This GEDCOM parser is structured as follows:
