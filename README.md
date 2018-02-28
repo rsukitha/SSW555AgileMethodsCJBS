@@ -10,18 +10,27 @@ This GEDCOM parser is structured as follows:
 This is the top-level class that allows you to parse a single (or many) GEDCOM files. It is broken down into a few pieces:
 
 ##### Method:
-`GedcomParser.parse_gedcom_file(path/to/file)`
+```
+GedcomParser.parse_gedcom_file(path/to/file)
+```
 ##### Result:
-List of Dictionaries containing parsed data. `{Individuals, Families}`
+List of Dictionaries containing parsed data. 
+```
+{Families, Individuals}
+```
 
 ##### Method:
-`GedcomParser.print_individuals_data(individual_dict, run_validations)`
+```
+GedcomParser.print_individuals_data(individual_dict, run_validations)
+```
 ##### Result:
 A Pretty Table containing all of the INDIVIDUAL information in the GEDCOM file, provided the file is valid.
 INDIVIDUAL Error log, if `run_validations` is true.
 
 ##### Method:
-`GedcomParser.print_family_data(family_dict, individual_data, run_validations)`
+```
+GedcomParser.print_family_data(family_dict, individual_data, run_validations)
+```
 ##### Result:
 A Pretty Table containing all of the FAMILY information in the GEDCOM file, provided the file is valid.
 FAMILY Error log, if `run_validations` is true.
