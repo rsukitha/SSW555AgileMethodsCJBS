@@ -1,3 +1,4 @@
+~~~~~~~~~~~~~~~~SPRINT 1 TEST BEGIN~~~~~~~~~~~~~~~~
 Individuals
 +------------+--------------------+--------+-------------+-----+-------+-------------+------------------+----------------------------------+
 |     ID     |        Name        | Gender |   Birthday  | Age | Alive |    Death    |      Child       |              Spouse              |
@@ -37,8 +38,8 @@ Families
 | US21Role | 24 OCT 2010 |     NA     |    @I4@    | Michelle /Corrado/ |   @I6@   | Damien /Lucchese/  |                {'@I5@': '@I5@'}                |
 +----------+-------------+------------+------------+--------------------+----------+--------------------+------------------------------------------------+
 ERROR: FAMILY: US25: @F1@: Child with name: Herman /Smith/ and birthday 2 MAR 2016 already exists
-ERROR: FAMILY DIVORCE: US01: US01DIV: 06 06 2100 is in the future from 02 26 2018
-ERROR: FAMILY MARRIAGE: US01: US01Marr: 03 09 2100 is in the future from 02 26 2018
+ERROR: FAMILY DIVORCE: US01: US01DIV: 06 06 2100 is in the future from 02 27 2018
+ERROR: FAMILY MARRIAGE: US01: US01Marr: 03 09 2100 is in the future from 02 27 2018
 ERROR: FAMILY: US02: US02Marr: Individual Born 02 13 1955 after Marriage on 06 22 1954
 ERROR: FAMILY: US10: US10Fam: Wife Married on 24 OCT 2017 before birth on 19 AUG 2010
 ERROR: FAMILY: US10: US10Fam: Husband Married on 24 OCT 2017 before birth on 13 DEC 2015
@@ -47,11 +48,10 @@ ERROR: FAMILY: US21: US21Role: Spouse with gender: F and role HUSB do not match
 NOTICE: INDIVIDUAL: US38: @I10@: Upcoming Birthday on 2 MAR 2016
 NOTICE: INDIVIDUAL: US38: @I3@: Upcoming Birthday on 18 MAR 1954
 NOTICE: INDIVIDUAL: US38: US23Unique: Upcoming Birthday on 2 MAR 2016
-ERROR: INDIVIDUAL BIRTHDAY: US01: US01Birth: 02 21 2100 is in the future from 02 26 2018
-ERROR: INDIVIDUAL DEATH: US01: US01Death: 06 05 2100 is in the future from 02 26 2018
+ERROR: INDIVIDUAL: US23: US23Unique: Individual with name: Herman /Smith/ and birthday 2 MAR 2016 already exists
+ERROR: INDIVIDUAL BIRTHDAY: US01: US01Birth: 02 21 2100 is in the future from 02 27 2018
+ERROR: INDIVIDUAL DEATH: US01: US01Death: 06 05 2100 is in the future from 02 27 2018
 ERROR: INDIVIDUAL: US07: US07Death: Individual Birthday 21 FEB 1592 over 150 years ago.
 ERROR: FAMILY: US22: Family ID @F3@ is a duplicate.
-
 ERROR: INDIVIDUAL: US22: Individual ID @I10@ is a duplicate.
-
 ~~~~~~~~~~~~~~~~SPRINT 1 TEST END~~~~~~~~~~~~~~~~
