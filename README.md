@@ -1,5 +1,7 @@
 # SSW 555 Agile Methods in Software Engineering
 [![Build Status](https://travis-ci.org/jj1976/SSW555AgileMethodsCJBS.svg?branch=master)](https://travis-ci.org/jj1976/SSW555AgileMethodsCJBS)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/2019388c98d94776be900cb426a707be)](https://www.codacy.com/app/CCorrado/SSW555AgileMethodsCJBS?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=jj1976/SSW555AgileMethodsCJBS&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/2019388c98d94776be900cb426a707be)](https://www.codacy.com/app/CCorrado/SSW555AgileMethodsCJBS?utm_source=github.com&utm_medium=referral&utm_content=jj1976/SSW555AgileMethodsCJBS&utm_campaign=Badge_Coverage)
 
 ## Project Structure
 This GEDCOM parser is structured as follows:
