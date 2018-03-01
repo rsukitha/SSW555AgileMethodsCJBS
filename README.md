@@ -1,6 +1,7 @@
 # SSW 555 Agile Methods in Software Engineering
-
-This is our Group Repository containing our GEDCOM Parser for the semester.
+[![Build Status](https://travis-ci.org/jj1976/SSW555AgileMethodsCJBS.svg?branch=master)](https://travis-ci.org/jj1976/SSW555AgileMethodsCJBS)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/2019388c98d94776be900cb426a707be)](https://www.codacy.com/app/CCorrado/SSW555AgileMethodsCJBS?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=jj1976/SSW555AgileMethodsCJBS&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/2019388c98d94776be900cb426a707be)](https://www.codacy.com/app/CCorrado/SSW555AgileMethodsCJBS?utm_source=github.com&utm_medium=referral&utm_content=jj1976/SSW555AgileMethodsCJBS&utm_campaign=Badge_Coverage)
 
 ## Project Structure
 This GEDCOM parser is structured as follows:
@@ -9,18 +10,27 @@ This GEDCOM parser is structured as follows:
 This is the top-level class that allows you to parse a single (or many) GEDCOM files. It is broken down into a few pieces:
 
 ##### Method:
-`GedcomParser.parse_gedcom_file(path/to/file)`
+```
+GedcomParser.parse_gedcom_file(path/to/file)
+```
 ##### Result:
-List of Dictionaries containing parsed data. `{Individuals, Families}`
+List of Dictionaries containing parsed data. 
+```
+{Families, Individuals}
+```
 
 ##### Method:
-`GedcomParser.print_individuals_data(individual_dict, run_validations)`
+```
+GedcomParser.print_individuals_data(individual_dict, run_validations)
+```
 ##### Result:
 A Pretty Table containing all of the INDIVIDUAL information in the GEDCOM file, provided the file is valid.
 INDIVIDUAL Error log, if `run_validations` is true.
 
 ##### Method:
-`GedcomParser.print_family_data(family_dict, individual_data, run_validations)`
+```
+GedcomParser.print_family_data(family_dict, individual_data, run_validations)
+```
 ##### Result:
 A Pretty Table containing all of the FAMILY information in the GEDCOM file, provided the file is valid.
 FAMILY Error log, if `run_validations` is true.
