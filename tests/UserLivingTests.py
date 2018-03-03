@@ -12,7 +12,7 @@ class UserMarriageDateTests(unittest.TestCase):
         """
         Lists all living married people
         """
-        gedcom_data = parse_gedcom_file("../sampledata/us30testdata.ged")
+        gedcom_data = parse_gedcom_file("./sampledata/us30testdata.ged")
         famil = gedcom_data[0]
         individ=gedcom_data[1]
         for fam_id in gedcom_data[0]:
@@ -24,7 +24,7 @@ class UserMarriageDateTests(unittest.TestCase):
         """
         Lists all living single people over 30
         """
-        gedcom_data = parse_gedcom_file("../sampledata/us30testdata.ged")
+        gedcom_data = parse_gedcom_file("./sampledata/us30testdata.ged")
         famil = gedcom_data[0]
         individ=gedcom_data[1]
         for individual_id in gedcom_data[1]:
