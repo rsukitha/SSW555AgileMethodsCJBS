@@ -70,4 +70,17 @@ class Individual(Member):
                                                                                                  id))
                 return False
           return True
-
+    
+    def birth_before_death(self):
+        """
+        US 03: Validate birth occurs before death
+        :return: True if birth occurs before death
+        """
+        birthday = datetime.datetime.strptime(self.birthday, '%d %b %Y')
+        if self.death != "NA":
+            death_date = datetime.datetime.strptime(self.death, '%d %b %Y')
+            if death_date < birthday:
+                print("ERROR: INDIVIDUAL: US03: Individual {}: {}'s Birthday on {} occurs after death date on {}.".format(self.id,
+                                                                                       self.name,self.birthday, self.death))
+                return False
+        return True  
