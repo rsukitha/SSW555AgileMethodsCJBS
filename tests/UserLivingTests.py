@@ -17,7 +17,6 @@ class UserMarriageDateTests(unittest.TestCase):
         individ=gedcom_data[1]
         for fam_id in gedcom_data[0]:
             family = famil[fam_id]
-
         self.assertTrue(family.validate_living_married(individ,famil))
 
 
