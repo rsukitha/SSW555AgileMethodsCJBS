@@ -72,7 +72,7 @@ class Individual(Member):
           return True
 
     @staticmethod
-    def validate_living_single_over_30(self,individuals,families):
+    def validate_living_single_over_30(individuals,families):
         alive_single = set()
         for indiv in sorted(individuals.items()):
             for fam in sorted(families.items()):

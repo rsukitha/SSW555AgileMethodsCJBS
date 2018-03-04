@@ -127,7 +127,7 @@ class Family(Member):
         return True
 
     @staticmethod
-    def validate_living_married(self,individuals,families):
+    def validate_living_married(individuals,families):
         alive_married = set()
         for indiv in sorted(individuals.items()):
             for fam in sorted(families.items()):
