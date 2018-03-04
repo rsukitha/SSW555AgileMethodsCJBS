@@ -186,6 +186,7 @@ def validate_individuals(individual_dict):
         individual.verify_date_not_future(individual.id, individual.birthday, "INDIVIDUAL BIRTHDAY")
         individual.verify_date_not_future(individual.id, individual.death, "INDIVIDUAL DEATH")
         individual.validate_birthday()
+        individual.is_dead()
 
 
 def validate_families(family_dict, individual_data):
