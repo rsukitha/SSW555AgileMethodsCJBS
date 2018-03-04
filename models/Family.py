@@ -125,9 +125,8 @@ class Family(Member):
               print("ERROR: INDIVIDUAL: US04: Marriage date: {} should occur before divorce date: {}".format(marriage_date, divorce_date))
               return False
         return True
-          
-         
 
+    @staticmethod
     def validate_living_married(self,individuals,families):
         alive_married = set()
         for indiv in sorted(individuals.items()):

@@ -71,8 +71,7 @@ class Individual(Member):
                 return False
           return True
 
-
-
+    @staticmethod
     def validate_living_single_over_30(self,individuals,families):
         alive_single = set()
         for indiv in sorted(individuals.items()):
