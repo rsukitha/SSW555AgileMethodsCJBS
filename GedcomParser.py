@@ -125,10 +125,11 @@ def parse_valid_results(results):
     return families, individuals, duplicate_fam, duplicate_ind
 
 
-def print_individuals_data(individual_dict, run_validations):
+def print_individuals_data(individual_dict, family_dict, run_validations):
     """
     Method to print and build a table of the Individuals from a GEDCOM file.
     :param individual_dict -- Dictionary containing all Individuals. Key == ID of Individual
+    :param family_dict -- Dictionary containing all families. Key == ID of family
     :param run_validations -- boolean whether or not validations should run
     """
     table = prettytable.PrettyTable()
@@ -140,7 +141,7 @@ def print_individuals_data(individual_dict, run_validations):
     print("Individuals")
     print(table.get_string())
     if run_validations:
-        validate_individuals(individual_dict)
+        validate_individuals(individual_dict, family_dict)
 
 
 def print_family_data(family_dict, individual_data, run_validations):
@@ -175,10 +176,11 @@ def print_family_data(family_dict, individual_data, run_validations):
         validate_families(family_dict, individual_data)
 
 
-def validate_individuals(individual_dict):
+def validate_individuals(individual_dict, family_dict):
     """
     Method to validate Individuals and print any errors.
     :param individual_dict -- Dictionary containing all Individuals. Key == ID of Individual
+    :param family_dict -- Dictionary containing all families. Key == ID of family
     """
     find_upcoming_birthdays(individual_dict)
     unique_name_b_date(individual_dict)
@@ -187,6 +189,7 @@ def validate_individuals(individual_dict):
         individual.verify_date_not_future(individual.id, individual.death, "INDIVIDUAL DEATH")
         individual.validate_birthday()
         individual.is_dead()
+        individual.validate_living_single_over_30(family_dict)
 
 
 def validate_families(family_dict, individual_data):
@@ -195,6 +198,7 @@ def validate_families(family_dict, individual_data):
     :param family_dict -- Dictionary containing all families. Key == ID of family
     :param individual_data -- Dictionary containing all Individuals. Key == ID of Individual
     """
+    Family.validate_living_married(individual_data, family_dict)
     for fam_id, family in sorted(family_dict.items()):
         family.anniversary_upcoming(individual_data)
         family.validate_children(individual_data)

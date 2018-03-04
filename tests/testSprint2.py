@@ -11,13 +11,13 @@ class Sprint1OutputTests(unittest.TestCase):
 
     def test_parser(self):
         print("~~~~~~~~~~~~~~~~SPRINT 2 TEST BEGIN~~~~~~~~~~~~~~~~")
-        sprint2_data = parse_gedcom_file("./sampledata/sprint2testdata.ged")
+        sprint2_data = parse_gedcom_file("../sampledata/sprint2testdata.ged")
         self.assertTrue(sprint2_data != [])
-        print_individuals_data(sprint2_data[1], False)
+        print_individuals_data(sprint2_data[1], sprint2_data[0], False)
         print_family_data(sprint2_data[0], sprint2_data[1], False)
 
         validate_families(sprint2_data[0], sprint2_data[1])
-        validate_individuals(sprint2_data[1])
+        validate_individuals(sprint2_data[1], sprint2_data[0])
         if len(sprint2_data) <= 3:
             for error in sprint2_data[2]:
                 print(error + "\n")

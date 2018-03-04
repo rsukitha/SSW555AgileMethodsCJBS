@@ -165,4 +165,5 @@ class Family(Member):
 
                 else:
                     print("NOTICE: INDIVIDUAL: US30: {}: is alive and single".format(indiv[0]))
+                    return True
         return alive_married != []

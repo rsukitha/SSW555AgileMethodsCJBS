@@ -11,13 +11,13 @@ class GedcomParseTest(unittest.TestCase):
     def test_parser(self):
         proj2_test_data = parse_gedcom_file("./sampledata/proj02test.ged")
         self.assertTrue(proj2_test_data != [])
-        print_individuals_data(proj2_test_data[1], False)
+        print_individuals_data(proj2_test_data[1], proj2_test_data[0], False)
         print_family_data(proj2_test_data[0], proj2_test_data[1], True)
 
     def test_larger_dataset_parser(self):
         other_test_data = parse_gedcom_file("./sampledata/basetestdata.ged")
         self.assertTrue(other_test_data != [])
-        print_individuals_data(other_test_data[1], False)
+        print_individuals_data(other_test_data[1], other_test_data[0], False)
         print_family_data(other_test_data[0], other_test_data[1], True)
 
     def test_valid_tag(self):
