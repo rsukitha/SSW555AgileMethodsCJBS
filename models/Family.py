@@ -110,51 +110,59 @@ class Family(Member):
                                                                                                       "HUSB"))
                 return False
             return True
-    
-    def validate_marriage_divorce_date(self, marriage):
+
+    def validate_marriage_divorce_date(self):
         """
         Method to validate marriage date and divorce date for an individual.
 
-        :param individuals: marriage date
         :return: True if marriage occurs before divorce.
         """
-        marriage_date = datetime.datetime.strptime(marriage, '%d %b %Y')
+        marriage_date = datetime.datetime.strptime(self.married, '%d %b %Y')
         divorce_date = datetime.datetime.strptime(self.divorced, '%d %b %Y')
-        
+
         if divorce_date < marriage_date:
-              print("ERROR: INDIVIDUAL: US04: Marriage date: {} should occur before divorce date: {}".format(marriage_date, divorce_date))
-              return False
+            print(
+                "ERROR: INDIVIDUAL: US04: Marriage date: {} should occur before divorce date: {}".format(marriage_date,
+                                                                                                         divorce_date))
+            return False
         return True
 
+    def anniversary_upcoming(self, individuals, today=datetime.datetime.today()):
+        """
+        US 39: Print all upcoming anniversaries of living couples.
+        :param individuals: dictionary containing all individuals
+        :param today: date time to compare against (defaults to today)
+        :return: True if anniversary is upcoming
+        """
+        if self.wife_id in individuals:
+            wife = individuals[self.wife_id]
+        else:
+            return False
+
+        if self.husband_id in individuals:
+            husb = individuals[self.husband_id]
+        else:
+            return False
+
+        if self.married != "NA":
+            marriage_date = datetime.datetime.strptime(self.married, '%d %b %Y')
+        else:
+            return False
+
+        if wife.alive and husb.alive and self.return_upcoming_date(self.married, today):
+            print("NOTICE: FAMILY: US39: {}: Upcoming Anniversary on {}".format(self.id,
+                                                                                marriage_date.strftime("%b %d")))
+            return True
+        return False
+
     @staticmethod
-    def validate_living_married(individuals,families):
+    def validate_living_married(individuals, families):
         alive_married = set()
         for indiv in sorted(individuals.items()):
             for fam in sorted(families.items()):
-                if indiv[1].alive == True and indiv[0] in fam[1].husband_id or indiv[0] == fam[1].wife_id:
+                if indiv[1].alive is True and indiv[0] in fam[1].husband_id or indiv[0] == fam[1].wife_id:
                     alive_married.add(indiv[0])
 
                 else:
                     print("NOTICE: INDIVIDUAL: US30: {}: is alive and single".format(indiv[0]))
         return alive_married != []
-
-
-         
-         
-         
-         
-         
-         
-         
-         
-         
-         
-         
-         
-         
-         
-         
-         
-         
-         
-            

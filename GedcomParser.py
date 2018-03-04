@@ -196,6 +196,7 @@ def validate_families(family_dict, individual_data):
     :param individual_data -- Dictionary containing all Individuals. Key == ID of Individual
     """
     for fam_id, family in sorted(family_dict.items()):
+        family.anniversary_upcoming(individual_data)
         family.validate_children(individual_data)
         family.birth_before_marriage(individual_data)
         family.verify_date_not_future(fam_id, family.married, "FAMILY MARRIAGE")

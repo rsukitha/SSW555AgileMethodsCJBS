@@ -27,3 +27,15 @@ class Member:
         year_sub = today.year - 150
         today_minus_years = datetime.datetime(year=year_sub, day=today.day, month=today.month)
         return formatted_date.year > today_minus_years.year
+
+    @staticmethod
+    def return_upcoming_date(date, today=datetime.datetime.now()):
+        """
+        Prints whether this date is upcoming
+        :return: date object if date is upcoming within 30 days
+        """
+        current_year_date_str = datetime.datetime.strptime(date, '%d %b %Y').strftime(
+            "%m %d") + " " + str(today.year)
+        current_year_date = datetime.datetime.strptime(current_year_date_str, '%m %d %Y')
+        delta_from_date = current_year_date - today
+        return 0 <= delta_from_date.days <= 30
