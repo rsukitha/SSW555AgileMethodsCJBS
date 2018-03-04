@@ -39,11 +39,7 @@ class Individual(Member):
         Prints whether this user's birthday is upcoming
         :return: True if birthday is upcoming
         """
-        current_year_bday_str = datetime.datetime.strptime(self.birthday, '%d %b %Y').strftime(
-            "%m %d") + " " + str(today.year)
-        current_year_bday = datetime.datetime.strptime(current_year_bday_str, '%m %d %Y')
-        delta_from_birthday = current_year_bday - today
-        if 0 <= delta_from_birthday.days <= 30:
+        if self.return_upcoming_date(self.birthday, today):
             return self
         else:
             return False
@@ -61,6 +57,14 @@ class Individual(Member):
                 return int(abs(death_date.year)) - int(abs(birthday.year))
         return int(abs(today.year)) - int(abs(birthday.year))
 
+    def validate_spouse(self, child_id):
+
+        if child_id in self.child:
+            print("ERROR: INDIVIDUAL: US17: {}: Marriage cannot happen with descendants: {}.".format(self.id,
+                                                                                                     child_id))
+            return False
+        return True
+
     def is_dead(self):
         """
         US 29: List all deceased individuals in a GEDCOM file
@@ -71,20 +75,12 @@ class Individual(Member):
             return True
         return False
 
-    def validate_spouse(self, id):
-
-        if id in self.child:
-            print("ERROR: INDIVIDUAL: US17: {}: Marriage cannot happen with descendants: {}.".format(self.id,
-                                                                                                     id))
-            return False
-        return True
-
     @staticmethod
     def validate_living_single_over_30(individuals, families):
         alive_single = set()
         for indiv in sorted(individuals.items()):
             for fam in sorted(families.items()):
-                if indiv[1].alive == True and indiv[0] not in fam[1].husband_id or indiv[0] not in fam[1].wife_id:
+                if indiv[1].alive is True and indiv[0] not in fam[1].husband_id or indiv[0] not in fam[1].wife_id:
                     if Individual.calculate_age(indiv[1]) > 30:
                         alive_single.add(indiv[0])
                     else:
