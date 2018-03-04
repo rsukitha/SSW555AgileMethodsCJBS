@@ -125,9 +125,20 @@ class Family(Member):
               print("ERROR: INDIVIDUAL: US04: Marriage date: {} should occur before divorce date: {}".format(marriage_date, divorce_date))
               return False
         return True
-          
-         
-         
+
+    @staticmethod
+    def validate_living_married(individuals,families):
+        alive_married = set()
+        for indiv in sorted(individuals.items()):
+            for fam in sorted(families.items()):
+                if indiv[1].alive == True and indiv[0] in fam[1].husband_id or indiv[0] == fam[1].wife_id:
+                    alive_married.add(indiv[0])
+
+                else:
+                    print("NOTICE: INDIVIDUAL: US30: {}: is alive and single".format(indiv[0]))
+        return alive_married != []
+
+
          
          
          

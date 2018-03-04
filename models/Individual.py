@@ -71,3 +71,15 @@ class Individual(Member):
                 return False
           return True
 
+    @staticmethod
+    def validate_living_single_over_30(individuals,families):
+        alive_single = set()
+        for indiv in sorted(individuals.items()):
+            for fam in sorted(families.items()):
+                if indiv[1].alive == True and indiv[0] not in fam[1].husband_id or indiv[0] not in fam[1].wife_id:
+                    if Individual.calculate_age(indiv[1]) > 30:
+                            alive_single.add(indiv[0])
+                    else:
+                        print("NOTICE: INDIVIDUAL: US31: {}: is alive and single and less than 30 years old".format(indiv[0]))
+
+        return alive_single != []
