@@ -19,7 +19,6 @@ class IsDeadTests(unittest.TestCase):
         result = False
         for indi_id in individuals:
             individual = individuals[indi_id]
-            
             result = individual.is_dead()
             if result:
                 outcome.append(result)
@@ -36,7 +35,6 @@ class IsDeadTests(unittest.TestCase):
         result = False
         for indi_id in individuals:
             individual = individuals[indi_id]
-            
             result = individual.is_dead()
             if result:
                 outcome.append(result)
